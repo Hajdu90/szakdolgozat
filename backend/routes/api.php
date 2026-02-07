@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\FelhsznaloController;
+use App\Http\Controllers\UtazasiCsomagokController;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -9,4 +11,10 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/felhsznalo',[FelhsznaloController::class,'index']);
+Route::get('/felhsznalos',[FelhsznaloController::class,'index']);
+
+Route::get('/utazasi_csomagoks',[UtazasiCsomagokController::class,'index']);
+
+
+
+

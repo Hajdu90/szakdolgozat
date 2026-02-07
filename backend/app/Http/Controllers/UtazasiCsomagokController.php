@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Utazasi_csomagok;
-use App\Http\Requests\StoreUtazasi_csomagokRequest;
-use App\Http\Requests\UpdateUtazasi_csomagokRequest;
+use App\Models\UtazasiCsomagok;
+use App\Http\Requests\StoreUtazasiCsomagokRequest;
+use App\Http\Requests\UpdateUtazasiCsomagokRequest;
 
 class UtazasiCsomagokController extends Controller
 {
@@ -13,7 +13,7 @@ class UtazasiCsomagokController extends Controller
      */
     public function index()
     {
-        //
+        return UtazasiCsomagok::all();
     }
 
     /**

@@ -13,7 +13,7 @@ class FoglalasokController extends Controller
      */
     public function index()
     {
-        //
+        
     }
 
     /**
