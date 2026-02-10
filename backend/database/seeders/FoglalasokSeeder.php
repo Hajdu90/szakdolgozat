@@ -17,15 +17,15 @@ class FoglalasokSeeder extends Seeder
         Foglalasok::factory()->create([
             'helyszin_id'=>1,
             'letszam'=>2,
-            'felhasznalo_id'=>1,
+            'user_id'=>1,
             'aktualis_ar'=>50000,
         ]);
          Foglalasok::factory()->create([
             'helyszin_id'=>3,
             'letszam'=>4,
-            'felhasznalo_id'=>2,
+            'user_id'=>2,
             'aktualis_ar'=>70000,
         ]);
-        
+
     }
 }

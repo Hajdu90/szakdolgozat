@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('foglalasoks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('helyszin_id')->constrained('helyszins');
-            $table->foreignId('felhasznalo_id')->constrained('felhsznalos');
+            $table->foreignId('user_id')->constrained('users');
             $table->integer('letszam');
             $table->integer('aktualis_ar');
             $table->timestamps();

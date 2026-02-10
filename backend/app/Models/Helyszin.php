@@ -17,3 +17,4 @@ class Helyszin extends Model
         'ferohely',
     ];
 }
+

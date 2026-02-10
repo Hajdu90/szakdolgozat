@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Foglalasok extends Model
 {
-    
+
     use HasFactory;
     protected $fillable = [
         'helyszin_id',
         'letszam',
-        'felhasznalo_id',
+        'user_id',
         'aktualis_ar',
     ];
 
