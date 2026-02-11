@@ -20,7 +20,7 @@ class LastMArSeeder extends Seeder
         ]);
 
          LastMAr::factory()->create([
-        'utazasi_id'=>10,
+        'utazasi_id'=>2,
         'datum'=>'2026-12-15',
         'szazalek'=>30,
         ]);

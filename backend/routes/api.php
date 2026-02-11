@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::get('/felhsznalos',[FelhsznaloController::class,'index']);
+
 
 Route::get('/utazasi_csomagoks',[UtazasiCsomagokController::class,'index']);
 

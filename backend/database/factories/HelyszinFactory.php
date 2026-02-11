@@ -16,8 +16,14 @@ class HelyszinFactory extends Factory
      */
     public function definition(): array
     {
+        $tipusok = ['hotel', 'apartman', 'hostel', 'panzio', 'vendeghaz'];
+
         return [
-            //
+            'orszag' => $this->faker->country(),
+            'varos' => $this->faker->city(),
+            'szallashely_tipus' => $this->faker->randomElement($tipusok),
+            'cim' => $this->faker->streetAddress(),
+            'ferohely' => $this->faker->numberBetween(1, 20), // CHECK miatt >0
         ];
     }
 }
