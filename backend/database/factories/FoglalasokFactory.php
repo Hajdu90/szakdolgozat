@@ -17,7 +17,10 @@ class FoglalasokFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'utazasi_csomagok_id' => \App\Models\UtazasiCsomagok::inRandomOrder()->first()->id ?? 1,
+            'user_id' => \App\Models\User::inRandomOrder()->first()->id ?? 1,
+            'letszam' => fake()->numberBetween(1, 5),
+            'aktualis_ar' => fake()->numberBetween(10000, 100000),
         ];
     }
 }

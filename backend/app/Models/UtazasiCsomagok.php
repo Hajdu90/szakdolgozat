@@ -16,8 +16,27 @@ class UtazasiCsomagok extends Model
         'utazasi_mod_id',
         'lastminute',
         'letszam',
-        'szabad_helyek',
         'ar',
 
     ];
+
+    //JSON-be rakja bele a szabad_helyek-et
+    protected $appends = ['szabad_helyek'];
+
+    //kapcsolat a foglalásokkal
+    public function foglalasoks() {
+        return $this->hasMany(Foglalasok::class, 'utazasi_csomagok_id');
+    }
+
+    //kapcsolat a helyszínnel
+    public function helyszin() {
+        return $this->belongsTo(Helyszin::class, 'helyszin_id');
+    }
+
+    //számítás Dinamikus
+    public function getSzabadHelyekAttribute() {
+        $foglalt = $this->foglalasoks()->sum('letszam');
+
+        return $this->letszam - $foglalt;
+    }
 }
