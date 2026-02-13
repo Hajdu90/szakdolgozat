@@ -13,19 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name'=>'teszt1',
-            'email'=>'kismaria@hotmail.com',
-            'password'=>'teszt12345',
-            'roles'=>0,
-        ]);
-
-        User::factory()->create([
-            'name'=>'Juli Főnök',
-            'email'=>'juliboss@hotmail.com',
-            'password'=>'teszt12345',
-            'roles'=>1,
-        ]);
+        User::factory(10)->create();
     }
 }
 

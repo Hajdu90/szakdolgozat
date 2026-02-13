@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('foglalasoks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('helyszin_id')->constrained('helyszins');
+            $table->foreignId('utazasi_csomagok_id')->constrained('utazasi_csomagoks');
             $table->foreignId('user_id')->constrained('users');
             $table->integer('letszam');
             $table->integer('aktualis_ar');
