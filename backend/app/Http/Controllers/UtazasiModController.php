@@ -13,7 +13,7 @@ class UtazasiModController extends Controller
      */
     public function index()
     {
-        //
+        return Utazasi_mod::all();
     }
 
     /**

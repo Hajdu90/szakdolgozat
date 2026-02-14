@@ -13,7 +13,7 @@ class KepekController extends Controller
      */
     public function index()
     {
-        //
+        return kepek::all();
     }
 
     /**

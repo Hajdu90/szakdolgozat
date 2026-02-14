@@ -17,7 +17,9 @@ class LastMArFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'utazasi_id' => \App\Models\UtazasiCsomagok::inRandomOrder()->value('id') ?? 1,
+            'datum' => $this->faker->date(),
+            'szazalek' => $this->faker->numberBetween(20,40),
         ];
     }
 }

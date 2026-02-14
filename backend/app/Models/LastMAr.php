@@ -14,4 +14,9 @@ class LastMAr extends Model
         'datum',
         'szazalek',
     ];
+
+    public function utazasiCsomag()
+    {
+        return $this->belongsTo(\APP\Models\UtazasiCsomagok::class, 'utazasi_id');
+    }
 }

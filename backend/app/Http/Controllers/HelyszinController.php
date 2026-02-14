@@ -13,7 +13,7 @@ class HelyszinController extends Controller
      */
     public function index()
     {
-        //
+        return Helyszin::all();
     }
 
     /**
