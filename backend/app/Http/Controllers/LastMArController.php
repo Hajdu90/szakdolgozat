@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Last_m_ar;
 use App\Http\Requests\StoreLast_m_arRequest;
 use App\Http\Requests\UpdateLast_m_arRequest;
+use App\Models\LastMAr;
 
 class LastMArController extends Controller
 {
@@ -13,7 +14,7 @@ class LastMArController extends Controller
      */
     public function index()
     {
-        //
+        return LastMAr::all();
     }
 
     /**
@@ -27,7 +28,7 @@ class LastMArController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Last_m_ar $last_m_ar)
+    public function show(LastMAr $last_m_ar)
     {
         //
     }
@@ -35,7 +36,7 @@ class LastMArController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateLast_m_arRequest $request, Last_m_ar $last_m_ar)
+    public function update(UpdateLast_m_arRequest $request, LastMAr $last_m_ar)
     {
         //
     }
@@ -43,7 +44,7 @@ class LastMArController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Last_m_ar $last_m_ar)
+    public function destroy(LastMAr $last_m_ar)
     {
         //
     }

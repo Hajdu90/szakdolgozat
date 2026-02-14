@@ -16,7 +16,7 @@ class FoglalasokController extends Controller
      */
     public function index()
     {
-        return \App\Models\Foglalasok::with('utazasiCsomag')->get();
+        return \App\Models\Foglalasok::with('UtazasiCsomagok')->get();
     }
 
     /**

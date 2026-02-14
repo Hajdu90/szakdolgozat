@@ -33,6 +33,11 @@ class UtazasiCsomagok extends Model
         return $this->belongsTo(Helyszin::class, 'helyszin_id');
     }
 
+    //kapcsolat a lastminute-vel
+    public function lastminute() {
+        return $this->hasOne(\App\Models\LastMAr::class, 'utazasi_id');
+    }
+
     //számítás Dinamikus
     public function getSzabadHelyekAttribute() {
         $foglalt = $this->foglalasoks()->sum('letszam');
