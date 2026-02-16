@@ -11,17 +11,12 @@ use Illuminate\Support\Facades\Auth;
 
 class FoglalasokController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        return \App\Models\Foglalasok::with('UtazasiCsomagok')->get();
+        return Foglalasok::with('utazasiCsomag')->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //Alapvető validáció
