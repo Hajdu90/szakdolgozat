@@ -1,0 +1,56 @@
+
+
+
+.navBar {
+    display: flex;
+    align-items: center; /* függőleges középre */
+    padding: 10px 20px;
+    position: relative;  /* kell a abszolút pozicionáláshoz */
+}
+
+
+.ulLista {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+
+.ulLista li a {
+    text-decoration: none;      
+    color: #6a7784;             
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    margin: 5px;
+    background-color:white ;
+    transition: transform 0.3s; 
+}
+
+.ulLista li a:hover {
+    transform: scale(1.05);  
+    background-color: rgb(104, 205, 255);
+    color: aliceblue;  
+}
+
+.kosar {
+    margin-left: auto; 
+    border-radius: 10px;
+    font-size: 15px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.kosar:hover {
+    transform: scale(1.05);
+}

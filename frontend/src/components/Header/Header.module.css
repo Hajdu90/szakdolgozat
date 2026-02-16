@@ -1,0 +1,55 @@
+
+.headerTop{
+    height: 50px;
+
+}
+
+.logo{
+    margin-left:20px ;
+    text-decoration: none;
+    font-size: 35px;
+    font-family: 'Lobster Two';
+    color: rgb(59, 164, 255);
+    font-style: italic;
+    font-weight: bolder;
+    
+}
+
+
+.bejlnBtn{
+    float: right;
+    border-radius: 10px;
+    background-color: rgb(125, 214, 255);
+    border: none;
+    padding: 10px;
+    color: aliceblue;
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-top: 10px;
+    font-weight: 600;
+
+
+}
+
+.bejlnBtn:hover{
+    transform: scale(1.05);
+}
+
+.regBtn{
+    float: right;
+     border-radius: 10px;
+    background-color: rgb(224, 245, 255);
+    border: none;
+    padding: 10px;
+    color: rgb(106, 119, 132);
+    cursor: pointer;
+    transition: transform 0.3s;
+    margin-left: 5px;
+    margin-right: 20px;
+    margin-top: 10px;
+    
+}
+.regBtn:hover{
+    transform: scale(1.05);
+}
+
