@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Csomag {
     id: number;
@@ -26,13 +27,15 @@ function Csomagok() {
             <h1>Csomagok</h1>
 
             {csomagok.map((csomag) => (
-                <div key={csomag.id}>
+                <Link key={csomag.id} to={`/csomagok/${csomag.id}`}>
+                <div>
                     <p>Indulás: {csomag.indulasi_datum}</p>
                     <p>Visszaút: {csomag.visszaut_datum}</p>
                     <p>Szabad helyek: {csomag.szabad_helyek}</p>
                     <p>Ár: {csomag.ar} Ft</p>
                     <hr />
                 </div>
+                </Link>
             ))}
 
         </div>

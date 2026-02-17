@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import NavBar from './components/Navbar/NavBar';
 import Csomagok from './components/Csomagok/Csomagok';
 import Home from './components/Home/Home';
+import CsomagReszlet from './components/Csomagok/CsomagReszlet';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
      */}
      <Route path='/' element={<Home/>}/>
      <Route path='/csomagok' element={<Csomagok/>}/>
+     <Route path='/csomagok/:id' element={<CsomagReszlet/>}/>
     
     </Routes>
    </BrowserRouter>

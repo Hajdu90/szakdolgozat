@@ -20,6 +20,8 @@ Route::get('/users', function (Request $request) {
 //Utazasok
 Route::get('/utazasi_csomagoks',[UtazasiCsomagokController::class,'index']);
 Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
+Route::get('/utazasi_csomagoks/{id}', [UtazasiCsomagokController::class,'show']);
+
 
 //Foglalasok
 Route::get('/foglalasok', [FoglalasokController::class, 'index']);
