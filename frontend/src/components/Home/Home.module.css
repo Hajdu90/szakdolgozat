@@ -1,7 +1,5 @@
 
-/* Home.module.css */
 
-/* HEADER */
 .homeHeader {
   display: flex;
   justify-content: flex-end; 
@@ -24,7 +22,7 @@
 
 }
 
-/* DATE INPUT */
+
 .dateInput {
   padding: 5px 10px;
   border-radius: 5px;
@@ -100,7 +98,7 @@
   color: #ffffff;
   font-weight: bolder;
   transition: transform 0.5s;
-  
+
 
 }
 
@@ -128,15 +126,23 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* tartalom tetején, szöveg alján */
+  justify-content: space-between; 
   align-items: center;
   text-align: center;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  min-width: 150px; /* ne legyen túl kicsi */
+  min-width: 150px; 
   height: 350px; 
   margin: 20px;   
+  cursor: pointer;
+  transition: transform 0.3s ;
   
+}
+
+
+.lastMinuteCard:hover{
+    transform: scale(1.05);
+
 }
 
 .lastMinuteCard img {
