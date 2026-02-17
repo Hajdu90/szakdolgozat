@@ -1,0 +1,152 @@
+
+/* Home.module.css */
+
+/* HEADER */
+.homeHeader {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center;
+  gap: 15px;                
+  padding: 10px;
+  flex-wrap: wrap;           
+  background-color: #f5f5f5; 
+  border-bottom: 1px solid #ddd;
+  margin-right: 50px;
+}
+
+/* SELECT - úticél választó */
+.destinationSelect {
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  cursor: pointer;
+
+}
+
+/* DATE INPUT */
+.dateInput {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+/* UTAS SZÁMLÁLÓ */
+.passengerCounter {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.passengerLabel {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.passengerBtn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #70acf0;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.passengerBtn:hover {
+  background-color: #005bb5;
+}
+
+.passengerNumber {
+  min-width: 20px;
+  text-align: center;
+  font-weight: bold;
+  color: rgb(#43adef);
+}
+
+
+.searchBtn {
+  padding: 5px 15px;
+  background-color: #43adef;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.searchBtn:hover {
+  background-color: #1162a4;
+}
+
+
+
+/* KÉP ÉS CSOMAGOK GOMB */
+.imageContainer {
+    height: 500px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background-color: #93c9ff;
+}
+
+.packageBtn {
+  padding: 5px 15px;
+  background-color: #3377ff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 25px;
+  color: #ffffff;
+  font-weight: bolder;
+  transition: transform 0.5s;
+  
+
+}
+
+.packageBtn:hover {
+    transform: scale(1.02);
+    background-color: #0033ff;
+  
+}
+
+
+
+/* LAST MINUTE SECTION */
+.lastMinuteContainer {
+  display: flex;
+  gap: 15px;                  
+  flex-wrap: nowrap;          
+  justify-content: space-between;
+  margin-bottom: 350px;
+}
+
+.lastMinuteCard {
+  flex: 1 1 calc(25% - 11.25px); 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* tartalom tetején, szöveg alján */
+  align-items: center;
+  text-align: center;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  min-width: 150px; /* ne legyen túl kicsi */
+  height: 350px; 
+  margin: 20px;   
+  
+}
+
+.lastMinuteCard img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.lastMinuteCard p {
+  font-size: 14px;
+}
