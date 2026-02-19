@@ -2,15 +2,15 @@
 
 .homeHeader {
   width: 100%;
-  box-sizing: border-box; /* a border és padding is benne lesz a 100%-ban */
-  margin: 0;              /* eltávolítja a 50px jobb margót */
+  box-sizing: border-box; 
+  margin: 0;              
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 15px;                
   padding: 10px;
   flex-wrap: wrap;
-  background: linear-gradient(to right,#3198ff, #8dc6ff); /* modern kék */
+  background: linear-gradient(to right,#3198ff, #8dc6ff); 
  
 }
 
