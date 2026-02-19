@@ -25,7 +25,7 @@ function Footer() {
         ></path>
       </svg>
 
-      <p style={{ textAlign: "center", color: "white", marginTop: "-30px" }}>
+      <p style={{ textAlign: "center", color: "white", marginTop: "-30px", }}>
         © 2026 Viazy – Fedezd fel a világot velünk! 🌍
       </p>
     </div>
