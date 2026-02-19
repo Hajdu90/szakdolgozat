@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "./Home.module.css";
 
+import bannerPic from "../pictures/Beach_Banner.jpg"
+
 import { useNavigate } from "react-router-dom";
 
 function Home() {
@@ -35,7 +37,7 @@ function Home() {
 
        
         <div className={styles.imageContainer}>
-          <p>itt lesz egy kép</p>
+          <img className={styles.banner} src={bannerPic} alt="" />
           <button className={styles.packageBtn} onClick={() => navigate("/csomagok")}>Csomagok</button>
         </div>
       </article>
@@ -84,6 +86,27 @@ function Home() {
             </div>
         </div>
         </div>
+</section>
+
+<section className={styles.secContainer}>
+    <div className={styles.secSectionDiv} >
+        <h2>Széles választék</h2>
+        <p>Hazai és külföldi utazásszervezől összes kínálata egy helyen, könnyen
+            összehasonlítható formában.
+        </p>
+    </div>
+    <div className={styles.secSectionDiv} >
+        <h2>Legalacsonyabb ár</h2>
+        <p>Ha a megrendelt utazást az utazás- szervezőnél kezdvezőbb áron találja visszatérítjük az 
+            árkülönbözetet, valamit 40.000Ft jutalommal részesítjük.
+        </p>
+    </div>
+    <div className={styles.secSectionDiv} >
+        <h2>Valós értékelések</h2>
+        <p>Több mint 350.000, korábbi utasainktól származó ellenőrzött értékelés nyújt
+            segítséget a döntéshozatalban.
+        </p>
+    </div>
 </section>
 
 

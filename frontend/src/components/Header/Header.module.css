@@ -1,15 +1,16 @@
 
 .headerTop{
     height: 50px;
+    background:linear-gradient(to right, #8dc6ff, #3198ff);
 
 }
 
 .logo{
     margin-left:20px ;
     text-decoration: none;
-    font-size: 35px;
+    font-size: 40px;
     font-family: 'Lobster Two';
-    color: rgb(59, 164, 255);
+    color: rgb(255, 255, 255);
     font-style: italic;
     font-weight: bolder;
     
@@ -19,7 +20,7 @@
 .bejlnBtn{
     float: right;
     border-radius: 10px;
-    background-color: rgb(125, 214, 255);
+    background-color: #8dc6ff;
     border: none;
     padding: 10px;
     color: aliceblue;
@@ -27,29 +28,33 @@
     transition: transform 0.3s;
     margin-top: 10px;
     font-weight: 600;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
 
 }
 
 .bejlnBtn:hover{
     transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .regBtn{
     float: right;
-     border-radius: 10px;
-    background-color: rgb(224, 245, 255);
-    border: none;
+    border-radius: 10px;
+    background-color: #3f9efe;
+    border: 1.7px solid rgb(255, 255, 255);
     padding: 10px;
-    color: rgb(106, 119, 132);
+    color: rgb(255, 255, 255);
     cursor: pointer;
     transition: transform 0.3s;
     margin-left: 5px;
     margin-right: 20px;
     margin-top: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     
 }
 .regBtn:hover{
     transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 

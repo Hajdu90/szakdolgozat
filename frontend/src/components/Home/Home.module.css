@@ -1,15 +1,17 @@
 
 
 .homeHeader {
+  width: 100%;
+  box-sizing: border-box; /* a border és padding is benne lesz a 100%-ban */
+  margin: 0;              /* eltávolítja a 50px jobb margót */
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   align-items: center;
   gap: 15px;                
   padding: 10px;
-  flex-wrap: wrap;           
-  background-color: #f5f5f5; 
-  border-bottom: 1px solid #ddd;
-  margin-right: 50px;
+  flex-wrap: wrap;
+  background: linear-gradient(to right,#3198ff, #8dc6ff); /* modern kék */
+ 
 }
 
 /* SELECT - úticél választó */
@@ -45,14 +47,14 @@
 .passengerBtn {
   padding: 5px 10px;
   border: none;
-  background-color: #70acf0;
+  background-color: #2f8cf8;
   color: white;
   border-radius: 5px;
   cursor: pointer;
 }
 
 .passengerBtn:hover {
-  background-color: #005bb5;
+  background-color: #005eff;
 }
 
 .passengerNumber {
@@ -65,47 +67,55 @@
 
 .searchBtn {
   padding: 5px 15px;
-  background-color: #43adef;
+  background-color: #2f8cf8;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 .searchBtn:hover {
-  background-color: #1162a4;
+  background-color: #005eff;
 }
 
 
 
 /* KÉP ÉS CSOMAGOK GOMB */
 .imageContainer {
-    height: 500px;
-    margin-top: 20px;
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background-color: #93c9ff;
+  position: relative;
+  height: 500px;
+  overflow: hidden;
+}
+
+.banner {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .packageBtn {
+  position: absolute;
+  height:50px;
+  width: 200px;
+  top: 60%;
+  left: 15%;
+  transform: translate(-50%, -50%);
   padding: 5px 15px;
-  background-color: #3377ff;
+  background-color: #ff7733;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 25px;
   color: #ffffff;
   font-weight: bolder;
-  transition: transform 0.5s;
-
-
+  transition: transform 0.3s;
 }
 
 .packageBtn:hover {
-    transform: scale(1.02);
-    background-color: #0033ff;
-  
+  transform: translate(-50%, -50%) scale(1.05);
+  background-color: #ff4d00;
 }
 
 
@@ -116,7 +126,14 @@
   gap: 15px;                  
   flex-wrap: nowrap;          
   justify-content: space-between;
-  margin-bottom: 350px;
+  margin-bottom: 100px;
+}
+
+.lastMinuteTitle{
+  margin-left: 20px;
+  font-size: 30px;
+  color: #3943ff;
+
 }
 
 .lastMinuteCard {
@@ -155,4 +172,31 @@
 
 .lastMinuteCard p {
   font-size: 14px;
+
 }
+
+
+
+/*Miért mi, Section*/
+
+
+
+
+.secContainer{
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  height: 350px;
+  width: 70%;
+  margin: auto;
+
+}
+
+.secSectionDiv{
+  text-align: center;
+}
+
+.secSectionDiv h2{
+  color: #3943ff;
+}
+
