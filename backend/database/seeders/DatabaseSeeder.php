@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(HelyszinSeeder::class);
         $this->call(UtazasiCsomagokSeeder::class);
         $this->call(KepekSeeder::class);
-        $this->call(LastMArSeeder::class);
         $this->call(FoglalasokSeeder::class);
 
 

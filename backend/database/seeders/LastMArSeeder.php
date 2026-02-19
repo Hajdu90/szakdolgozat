@@ -7,6 +7,8 @@ use Database\Factories\LastMArFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
+use function Symfony\Component\Clock\now;
+
 class LastMArSeeder extends Seeder
 {
     /**
@@ -14,6 +16,16 @@ class LastMArSeeder extends Seeder
      */
     public function run(): void
     {
-       LastMAr::factory(1)->create();
+       $utazasIds = \App\Models\UtazasiCsomagok::query()
+       ->where('lastminute',true)
+       ->pluck('id');
+
+       foreach ($utazasIds as $i => $utazasiId) {
+            \App\Models\LastMAr::factory()->create([
+                'utazasi_id' => $utazasiId,
+                'datum' => now()->modify("+{$i} days")->format('Y-m-d'), // unique datum
+            ]);
+        }
+
     }
 }
