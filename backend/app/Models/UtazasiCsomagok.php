@@ -11,7 +11,7 @@ class UtazasiCsomagok extends Model
     /** @use HasFactory<\Database\Factories\UtazasiCsomagokFactory> */
     use HasFactory;
 
-    protected $table = 'utazasi_csomagoks';//a tábla nevézt megadjuk miztos ami biztos
+    protected $table = 'utazasi_csomagoks';//a tábla nevézt megadjuk biztos ami biztos
 
     //automatikusan kitölthető táblák
     protected $fillable = [
@@ -37,6 +37,15 @@ class UtazasiCsomagok extends Model
         return $this->belongsTo(Helyszin::class, 'helyszin_id');
     }
 
+    //kapcsolat utazasi móddal
+    public function utazasiMod() {
+        return $this->belongsTo(Utazasi_mod::class,'utazasi_mod_id');
+    }
+
+    //képek kapcsolat
+    public function kepek() {
+        return $this->hasMany(kepek::class, 'utazas_id');
+    }
 
     //számítás szabad helyek
     public function getSzabadHelyekAttribute(): int
@@ -45,6 +54,7 @@ class UtazasiCsomagok extends Model
         return (int) $this->letszam - $foglalt;
     }
 
+    //Lastminute számítás
     public function getIsLastminuteAttribute(): bool
     {
         if (!$this->indulasi_datum) {
@@ -56,6 +66,7 @@ class UtazasiCsomagok extends Model
         );
     }
 
+    //Akciós ár számítás
     public function getAkciosArAttribute(): int
     {
         return $this->is_lastminute

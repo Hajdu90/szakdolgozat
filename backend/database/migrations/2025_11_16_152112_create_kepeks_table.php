@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('utazas_id')->constrained('utazasi_csomagoks');
             $table->string('kep_eleresi_ut',50);
             $table->timestamps();
-            $table->unique('utazas_id');
+            
             $table->unique('kep_eleresi_ut');
         });
 
