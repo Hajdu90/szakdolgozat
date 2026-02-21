@@ -16,5 +16,9 @@ class Helyszin extends Model
         'cim',
         'ferohely',
     ];
+
+    public function utazasiCsomagok() {
+        return $this->hasMany(UtazasiCsomagok::class, 'helyszin_id');
+    }
 }
 

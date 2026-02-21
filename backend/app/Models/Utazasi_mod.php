@@ -12,4 +12,8 @@ class Utazasi_mod extends Model
     protected $fillable = [
         'tipus',
     ];
+
+    public function utazasiCsomagok() {
+        return $this->hasMany(UtazasiCsomagok::class, 'utazasi_mod_id');
+    }
 }

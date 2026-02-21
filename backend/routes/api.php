@@ -31,10 +31,6 @@ Route::post('/foglalasok', [FoglalasokController::class, 'store']);
 Route::get('/users', [UserController::class, 'index']);
 Route::post('/users', [UserController::class, 'store']);
 
-//LastMinute-ok
-Route::get('/last_m_ars', [LastMArController::class, 'index']);
-Route::Post('/last_m_ars', [LastMArController::class, 'store']);
-
 //Kepek
 Route::get('/kepeks', [KepekController::class, 'index']);
 Route::post('/kepeks', [KepekController::class, 'index']);

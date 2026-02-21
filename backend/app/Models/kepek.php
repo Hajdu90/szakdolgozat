@@ -13,4 +13,8 @@ class kepek extends Model
         'utazas_id',
         'kep_eleresi_ut',
     ];
+
+    public function utazasiCsomago() {
+        return $this->belongsTo(UtazasiCsomagok::class, 'utazas_id');
+    }
 }
