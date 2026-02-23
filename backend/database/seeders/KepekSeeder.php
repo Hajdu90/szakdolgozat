@@ -14,18 +14,24 @@ class KepekSeeder extends Seeder
     {
         kepek::factory()->create([
             'utazas_id'=>1,
-            'kep_eleresi_ut'=>'/pictures/Beach_Banner.jpg',
+            'kep_eleresi_ut'=>'/pictures/firstPictures/costa_rica.jpg',
 
         ]);
          kepek::factory()->create([
             'utazas_id'=>2,
-            'kep_eleresi_ut'=>'https://picsum.photos/300',
+            'kep_eleresi_ut'=>'/pictures/firstPictures/Montserrat.jpg',
 
         ]);
          kepek::factory()->create([
             'utazas_id'=>3,
-            'kep_eleresi_ut'=>'https://picsum.photos/400',
+            'kep_eleresi_ut'=>'/pictures/firstPictures/hungary.jpg',
 
+        ]);
+
+
+        kepek::factory()->create([
+            'utazas_id'=>4,
+            'kep_eleresi_ut'=>'/pictures/firstPictures/cape_verde.jpg'
         ]);
     }
 }

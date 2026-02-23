@@ -1,14 +1,27 @@
+
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { data, Link } from "react-router-dom";
+
+
+import style from "./Csomagok.module.css"
+
+import kep from "../pictures/firstPictures/hungary.jpg"
+
+
+
 
 interface Csomag {
     id: number;
     helyszin_id: number;
-    indulasi_datum: string;
-    visszaut_datum: string;
-    letszam: number;
-    szabad_helyek: number;
     ar: number;
+
+    //helyszin táblábol
+    helyszin:{
+    orszag:string;
+    varos:string;
+    }
+
+
 }
 
 function Csomagok() {
@@ -19,21 +32,34 @@ function Csomagok() {
         fetch("http://127.0.0.1:8000/api/utazasi_csomagoks")
             .then(res => res.json())
             .then(data => setCsomagok(data))
-            .catch(err => console.log(err));
+            .catch(err => console.log("Hiba a Csomagok fetch-nél:",err));
     }, []);
 
+
+
+
     return (
-        <div>
-            <h1>Csomagok</h1>
+        
+        <div className={style.csomagContainer}>
 
             {csomagok.map((csomag) => (
-                <Link key={csomag.id} to={`/csomagok/${csomag.id}`}>
-                <div>
-                    <p>Indulás: {csomag.indulasi_datum}</p>
-                    <p>Visszaút: {csomag.visszaut_datum}</p>
-                    <p>Szabad helyek: {csomag.szabad_helyek}</p>
-                    <p>Ár: {csomag.ar} Ft</p>
-                    <hr />
+                <Link className={style.noLink} key={csomag.id} to={`/csomagok/${csomag.id}`}>
+                <div className={style.divContainer} >
+
+                    <div className={style.firstpicture}>
+                         <img 
+                        src={require(`../pictures/firstPictures/${csomag.helyszin.orszag.toLowerCase().replace(/ /g, "_")}.jpg`)}
+                        alt={csomag.helyszin.orszag} 
+                        />
+
+
+                    </div>
+
+                    <div className={style.szovegContainer}>
+                    <p className={style.orszagText}>{csomag.helyszin.orszag}</p>
+                    <p className={style.varosText}>{csomag.helyszin.varos}</p>
+                    <p  className={style.arText}>Ár: {csomag.ar} Ft</p>
+                    </div>
                 </div>
                 </Link>
             ))}
@@ -43,3 +69,10 @@ function Csomagok() {
 }
 
 export default Csomagok;
+
+
+/*
+Borito kep
+heyszin(orszag,varos)- a helyszin tablabol 
+ár
+*/

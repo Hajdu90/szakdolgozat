@@ -15,7 +15,7 @@ class UtazasiCsomagokController extends Controller
      */
     public function index()
     {
-        return UtazasiCsomagok::all();
+        return UtazasiCsomagok::with('helyszin')->get();
     }
 
     /**

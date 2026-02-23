@@ -30,6 +30,8 @@
     color: rgb(255, 255, 255);
     font-style: italic;
     font-weight: bolder;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4); /* vízszintes, függőleges, blur, szín */
+
 }
 
 /* --- MENÜ LISTA (Desktop) --- */
@@ -81,12 +83,22 @@
     font-weight: bold;
 }
 
-.bejlnBtn { background-color: #8dc6ff; }
-.regBtn { background-color: #3f9efe; border: 1.7px solid white; }
+.bejlnBtn { 
+    background-color: #0080ff; 
+    color: #ffffff;
+    font-weight: bolder;
+    box-shadow: 0 6px 10px rgba(255, 255, 255, 0.3);
+}
+
+.regBtn { 
+    background-color: #3f9efe; 
+    border: 1.7px solid white; 
+     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
 
 .regBtn:hover, .bejlnBtn:hover {
     transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+  
 }
 
 

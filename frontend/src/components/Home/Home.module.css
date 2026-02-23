@@ -37,6 +37,8 @@
   display: flex;
   align-items: center;
   gap: 5px;
+  color: #02007e;
+
 }
 
 .passengerLabel {
@@ -100,7 +102,7 @@
   height:50px;
   width: 200px;
   top: 60%;
-  left: 15%;
+  left: 25%;
   transform: translate(-50%, -50%);
   padding: 5px 15px;
   background-color: #ff7733;
