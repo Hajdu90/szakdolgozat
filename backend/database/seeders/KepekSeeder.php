@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
 use App\Models\kepek;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,7 +14,7 @@ class KepekSeeder extends Seeder
     {
         kepek::factory()->create([
             'utazas_id'=>1,
-            'kep_eleresi_ut'=>'https://picsum.photos/200',
+            'kep_eleresi_ut'=>'/pictures/Beach_Banner.jpg',
 
         ]);
          kepek::factory()->create([

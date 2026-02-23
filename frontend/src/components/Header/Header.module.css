@@ -1,60 +1,175 @@
 
-.headerTop{
-    height: 50px;
-    background:linear-gradient(to right, #8dc6ff, #3198ff);
-
+.headerTop {
+    height: 70px;
+    background: linear-gradient(to right, #8dc6ff, #3198ff);
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Elosztja a 3 fő részt */
+    padding: 0 40px;
+    position: relative;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
-.logo{
-    margin-left:20px ;
+
+.logoWrapper, .rightSide {
+    flex: 1; 
+}
+
+.rightSide {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+}
+
+
+.logo {
     text-decoration: none;
     font-size: 40px;
-    font-family: 'Lobster Two';
+    font-family: 'Lobster Two', cursive;
     color: rgb(255, 255, 255);
     font-style: italic;
     font-weight: bolder;
-    
+}
+
+/* --- MENÜ LISTA (Desktop) --- */
+.ulLista {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+    justify-content: center;
+    flex: 2; 
+}
+
+.ulLista li a {
+    text-decoration: none;      
+    color: #6a7784;             
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 10px 15px;
+    background-color: white;
+    transition: all 0.3s ease; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+}
+
+.ulLista li a:hover {
+    transform: scale(1.05);  
+    background-color: rgb(0, 106, 255);
+    color: aliceblue;  
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
 
-.bejlnBtn{
-    float: right;
+
+/* --- GOMBOK --- */
+.btnWrapper {
+    display: flex;
+    gap: 10px;
+}
+
+.regBtn, .bejlnBtn {
     border-radius: 10px;
-    background-color: #8dc6ff;
+    padding: 10px 15px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     border: none;
-    padding: 10px;
-    color: aliceblue;
-    cursor: pointer;
-    transition: transform 0.3s;
-    margin-top: 10px;
-    font-weight: 600;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-
-
+    font-weight: bold;
 }
 
-.bejlnBtn:hover{
+.bejlnBtn { background-color: #8dc6ff; }
+.regBtn { background-color: #3f9efe; border: 1.7px solid white; }
+
+.regBtn:hover, .bejlnBtn:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
 }
 
-.regBtn{
-    float: right;
-    border-radius: 10px;
-    background-color: #3f9efe;
-    border: 1.7px solid rgb(255, 255, 255);
-    padding: 10px;
-    color: rgb(255, 255, 255);
-    cursor: pointer;
-    transition: transform 0.3s;
-    margin-left: 5px;
-    margin-right: 20px;
-    margin-top: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    
-}
-.regBtn:hover{
-    transform: scale(1.05);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+
+
+/* Mobil gombok alapból rejtve */
+.mobileButtons {
+    display: none;
 }
 
+
+
+/* --- HAMBURGER Menu --- */
+.hamburger {
+    display: none; 
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    z-index: 1000;
+}
+
+.hamburger span {
+    width: 30px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: 0.3s;
+}
+
+/* --- RESPONSIVE  */
+@media (max-width: 820px) {
+    .headerTop {
+        padding: 0 20px;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .desktopButtons {
+        display: none; 
+    }
+
+    .ulLista {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        height: 0; 
+        overflow: hidden;
+        flex-direction: column;
+        background: linear-gradient(to bottom, #3198ff, #8dc6ff);
+        transition: 0.4s ease-in-out;
+        z-index: 999;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .ulLista.active {
+        height: auto;
+        min-height: 400px; 
+        padding: 30px 0;
+    }
+
+    .ulLista li {
+        width: 80%;
+        text-align: center;
+    }
+
+    .ulLista li a {
+        width: 100%; 
+    }
+
+    .mobileButtons {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        width: 80%;
+        margin-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.3);
+        padding-top: 20px;
+    }
+
+    .mobileButtons button {
+        width: 100%; 
+    }
+}
