@@ -5,8 +5,23 @@ import { data, Link } from "react-router-dom";
 
 import style from "./Csomagok.module.css"
 
-import kep from "../pictures/firstPictures/hungary.jpg"
 
+//képek
+import cape_verde from "../pictures/firstPictures/cape_verde.jpg"
+import montserrat from "../pictures/firstPictures/montserrat.jpg"
+import hungary from "../pictures/firstPictures/hungary.jpg"
+import costa_rica from "../pictures/firstPictures/costa_rica.jpg"
+
+//alap kep a seedeles miatt
+
+import alap from "../pictures/alap.jpg"
+
+const kepek: { [key: string]: string }={ 
+    cape_verde,
+    montserrat,
+    hungary,
+    costa_rica
+}
 
 
 
@@ -47,8 +62,8 @@ function Csomagok() {
                 <div className={style.divContainer} >
 
                     <div className={style.firstpicture}>
-                         <img 
-                        src={require(`../pictures/firstPictures/${csomag.helyszin.orszag.toLowerCase().replace(/ /g, "_")}.jpg`)}
+                         <img
+                        src={kepek[csomag.helyszin.orszag.toLowerCase()] || alap} 
                         alt={csomag.helyszin.orszag} 
                         />
 
