@@ -62,7 +62,7 @@ class UtazasiCsomagok extends Model
         }
 
         return Carbon::today()->gte(
-            Carbon::parse($this->indulasi_datum)->subDays(14)
+            Carbon::parse($this->indulasi_datum)->subDays(7)
         );
     }
 
