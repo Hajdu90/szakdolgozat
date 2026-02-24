@@ -84,3 +84,187 @@
     text-decoration: none;
 }
 
+
+
+/*Reszletek*/
+
+
+
+
+.sectionContainer{
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+
+}
+
+.kepekBaloldal{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    margin-left: 20px;
+
+}
+
+.nagyKep img{
+    width: 300px;
+    /* height: auto; */
+    height: 350px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    border-radius: 5%;
+    
+    
+
+}
+
+
+.kisKepekContainer{
+    display: flex;
+    gap: 10px;
+}
+
+.kisKepekContainer img{
+    width: 100px;
+    /* height: auto; */
+    height: 100px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: all 0.25s ease;}
+
+.kisKepekContainer img:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(49,152,255,0.4);
+}
+
+
+
+.infoSection{
+    width: 50%;
+    background: white;
+    border-radius: 16px;
+    padding: 25px 30px;
+    width: 50%;
+    box-shadow: 0 10px 30px rgba(0, 60, 150, 0.15);
+    border: 1px solid #e3edff;
+}
+
+.csomagTitle{
+    font-size: 28px;
+    font-weight: bolder;
+    color: #0a3d91;
+    margin-bottom: 15px;
+}
+
+.csLeiras{
+    background: #f4f8ff;
+    border-radius: 10px;
+    padding: 15px;
+    height: 250px;
+    line-height: 1.5;
+    color: #333;
+    border: 1px solid #dbe7ff;
+}
+
+.idopont{
+    float: right;
+    background: #f3f7fc;
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #0a3d91;
+    font-weight: bolder;
+    
+}
+
+
+.visszaBtn {
+    background: linear-gradient(135deg, #467CFF, #6FA3FF);
+    color: white;
+    margin-top: 20px;
+    margin-left: 20px;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(70, 124, 255, 0.35);
+    transition: all 0.2s ease;
+}
+
+.visszaBtn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(70, 124, 255, 0.45);
+    background: linear-gradient(135deg, #3b6df0, #5f95ff);
+}
+
+.visszaBtn:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 8px rgba(70, 124, 255, 0.3);
+}
+
+.infoContaners{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.szabadhelyPtag{
+    font-weight: 500;
+    color: #1a4fb3;
+    height: auto;
+    width: 30px;
+    border-radius: 5px;
+    background-color: #cee1fe;
+    text-align: center;
+    box-shadow: 0 3px 5px rgba(70, 124, 255, 0.3);
+}
+.utazasimodePtag{
+    font-weight: 500;
+    color: #1a4fb3;
+    height: auto;
+    width: 75px;
+    border-radius: 5px;
+    background-color: #cee1fe;
+    text-align: center;
+    box-shadow: 0 3px 5px rgba(70, 124, 255, 0.3);
+
+}
+
+
+.csAr{
+    font-size: 24px;
+    font-weight: bold;
+    color: #0a58ca;
+    margin-top: 10px;
+    box-shadow: 0 3px 5px rgba(70, 124, 255, 0.3);
+    width: 35%;
+}
+
+
+/*mobil*/
+
+@media (max-width: 768px) {
+    .sectionContainer{
+        flex-direction: column;   
+        align-items: center;
+    }
+
+    .infoSection{
+        width: 90%;            
+    }
+
+    .kepekBaloldal{
+        margin-left: 0;
+    }
+
+    .kisKepekContainer img{
+        margin-bottom: 0;       
+    }
+
+    .idopont{
+        float: none;            
+    }
+}

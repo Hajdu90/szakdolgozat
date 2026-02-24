@@ -9,6 +9,8 @@ import Home from './components/Home/Home';
 import CsomagReszlet from './components/Csomagok/CsomagReszlet';
 import Footer from './components/Footer/Footer';
 
+
+
 function App() {
   return (
    <BrowserRouter>

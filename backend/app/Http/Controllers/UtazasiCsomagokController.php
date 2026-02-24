@@ -10,17 +10,12 @@ use Illuminate\Http\Request;
 
 class UtazasiCsomagokController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   
     public function index()
     {
-        return UtazasiCsomagok::with('helyszin')->get();
+        return UtazasiCsomagok::with(['helyszin','utazasiMod'])->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //Validálás
@@ -45,17 +40,12 @@ class UtazasiCsomagokController extends Controller
         return response()->json($csomag);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show ($id)
-    {
-        return UtazasiCsomagok::findOrFail($id);
-    }
+   
+    public function show($id)
+{
+    return UtazasiCsomagok::with(['helyszin','utazasiMod'])->findOrFail($id);
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $csomag = UtazasiCsomagok::findOrFail($id);
@@ -63,9 +53,7 @@ class UtazasiCsomagokController extends Controller
         return response()->json($csomag);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+ 
    public function destroy($id)
     {
         $csomag = UtazasiCsomagok::findOrFail($id);
