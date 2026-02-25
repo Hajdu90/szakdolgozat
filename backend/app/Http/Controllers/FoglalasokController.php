@@ -7,11 +7,12 @@ use App\Http\Requests\StoreFoglalasokRequest;
 use App\Http\Requests\UpdateFoglalasokRequest;
 use App\Models\UtazasiCsomagok;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class FoglalasokController extends Controller
 {
-    
+
     public function index()
     {
         return Foglalasok::with('utazasiCsomag')->get();
@@ -72,5 +73,21 @@ class FoglalasokController extends Controller
     public function destroy(Foglalasok $foglalasok)
     {
         //
+    }
+
+    //Lekérdezés
+
+    //Bejelentkezett user korábbi foglalásai
+    public function korabbiFoglalasok(Request  $request)
+    {
+        $user = $request->user();
+
+        $foglalasok = $user->foglalasok()
+            ->with('utazasiCsomag')
+            ->whereDate('utazas_datuma', '<', Carbon::today())
+            ->orderByDesc('utazas_datuma')
+            ->get();
+
+        return response()->json($foglalasok);
     }
 }
