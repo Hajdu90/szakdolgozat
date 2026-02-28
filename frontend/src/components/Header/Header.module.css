@@ -4,7 +4,7 @@
     background: linear-gradient(to right, #8dc6ff, #3198ff);
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Elosztja a 3 fő részt */
+    justify-content: space-between;
     padding: 0 40px;
     position: relative;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
