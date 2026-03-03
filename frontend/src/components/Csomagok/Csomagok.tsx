@@ -42,6 +42,7 @@ interface Csomag {
 function Csomagok() {
 
     const [csomagok, setCsomagok] = useState<Csomag[]>([]);
+    const [utas, setUtas] = useState(1);
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/utazasi_csomagoks")
@@ -54,6 +55,32 @@ function Csomagok() {
 
 
     return (
+        <div>
+            {/*Kereses  */}
+
+            <header className={style.homeHeader}>
+            <select className={style.destinationSelect}>
+                <option value="" disabled selected>Hova szeretne utazni?</option>
+                <option value="Orszag1">Orszag1</option>
+                <option value="Orszag2">Orszag2</option>
+                <option value="Orszag3">Orszag3</option>
+                <option value="Orszag4">Orszag4</option>
+            </select>
+
+    
+          <input type="date" className={style.dateInput} />
+          
+          <div className={style.passengerCounter}>
+            <span className={style.passengerLabel}>Utasok</span>
+            <button className={style.passengerBtn} onClick={() => setUtas((prev) => Math.max(prev - 1, 1))}>-</button>
+
+            <span className={style.passengerNumber}>{utas}</span>
+            <button className={style.passengerBtn} onClick={() => setUtas((prev) => Math.min(prev + 1, 10))}>+</button>
+          </div>
+          <button className={style.searchBtn}>Keresés</button>
+
+        </header>
+
         
         <div className={style.csomagContainer}>
 
@@ -79,6 +106,7 @@ function Csomagok() {
                 </Link>
             ))}
 
+        </div>
         </div>
     );
 }

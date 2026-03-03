@@ -1,40 +1,29 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./Home.module.css";
 
 import bannerPic from "../pictures/Beach_Banner.jpg"
 
-import { useNavigate } from "react-router-dom";
+import alapPic from "../pictures/alap.jpg"
+
+import { data, useNavigate, Link } from "react-router-dom";
 
 function Home() {
-  const [utas, setUtas] = useState(1);
+ 
   const navigate=useNavigate();
+
+  //lasMin
+  const [lastMin,setLastMinute]=useState<any []>([]);
+
+  useEffect(()=>{
+    fetch("http://127.0.0.1:8000/api/utazasi_csomagoks")
+    .then(res => res.json())
+    .then(data=>setLastMinute(data));
+  }, []);
 
   return (
     <>
       <article>
-        <header className={styles.homeHeader}>
-            <select className={styles.destinationSelect}>
-                <option value="" disabled selected>Hova szeretne utazni?</option>
-                <option value="Orszag1">Orszag1</option>
-                <option value="Orszag2">Orszag2</option>
-                <option value="Orszag3">Orszag3</option>
-                <option value="Orszag4">Orszag4</option>
-            </select>
-
-    
-          <input type="date" className={styles.dateInput} />
-          
-          <div className={styles.passengerCounter}>
-            <span className={styles.passengerLabel}>Utasok</span>
-            <button className={styles.passengerBtn} onClick={() => setUtas((prev) => Math.max(prev - 1, 1))}>-</button>
-
-            <span className={styles.passengerNumber}>{utas}</span>
-            <button className={styles.passengerBtn} onClick={() => setUtas((prev) => Math.min(prev + 1, 10))}>+</button>
-          </div>
-          <button className={styles.searchBtn}>Keresés</button>
-
-        </header>
-
+        
        
         <div className={styles.imageContainer}>
           <img className={styles.banner} src={bannerPic} alt="" />
@@ -46,47 +35,47 @@ function Home() {
 
 
      {/* Last Minute szekció */}
-     <section className={styles.lastMinuteSection}>
-        <h2 className={styles.lastMinuteTitle}>Last Minute</h2>
+     {/* Last Minute szekció */}
+<section className={styles.lastMinuteSection}>
+  <h2 className={styles.lastMinuteTitle}>Last Minute</h2>
 
-        <div className={styles.lastMinuteContainer}>
+  <div className={styles.lastMinuteContainer}>
 
+    {lastMin
+      .filter(csomag => csomag.is_lastminute)
+      .slice(0, 4)
+      .map(csomag => (
+        <Link
+        key={csomag.id}
+        to={`/csomagok/${csomag.id}`}
+        className={styles.noLink}
+        >
             <div className={styles.lastMinuteCard}>
-                <img src="kepek/oraszag1.jpg" alt="Ország1" />
-            <div>
-                <p>Ország1</p>
-                <p>Régió1 | *4.8</p>
-            </div>
-     
+          
+          <img src={alapPic} alt="" />
+
+          <div>
+            <p>{csomag.helyszin.orszag}</p>
+
+            <p style={{ textDecoration: "line-through", color: "gray" }}>
+              {csomag.ar} Ft
+            </p>
+
+            <p style={{ color: "red", fontWeight: "bold" }}>
+              {csomag.akcios_ar} Ft
+            </p>
+
+          </div>
         </div>
+        </Link>
         
-        <div className={styles.lastMinuteCard}>
-            <img src="kepek/oraszag2.jpg" alt="Ország2" />
-            <div>
-                <p>Ország1</p>
-                <p>Régió1 | *4.8</p>
-                </div>
-            </div>
-            
-        <div className={styles.lastMinuteCard}>
-            <img src="kepek/oraszag3.jpg" alt="Ország3" />
-            <div>
-                <p>Ország1</p>
-                <p>Régió1 | *4.8</p>
-            </div>
-        </div>
-
-
-        <div className={styles.lastMinuteCard}>
-            <img src="kepek/oraszag4.jpg" alt="Ország4" />
+        
       
-            <div>
-                <p>Ország1</p>
-                <p>Régió1 | *4.8</p>
-            </div>
-        </div>
-        </div>
+      ))}
+
+  </div>
 </section>
+    
 
 <section className={styles.secContainer}>
     <div className={styles.secSectionDiv} >

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 
 import Bejelentkezes from "../Bejelentkezes/Bejelenkezes";
-import SingUp from "../Csomagok/SingUp/SingUp";
+import SingUp from "../SingUp/SingUp";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);

@@ -1,88 +1,5 @@
 
 
-.homeHeader {
-  width: 100%;
-  box-sizing: border-box; 
-  margin: 0;              
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 15px;                
-  padding: 10px;
-  flex-wrap: wrap;
-  background: linear-gradient(to right,#3198ff, #8dc6ff); 
- 
-}
-
-/* SELECT - úticél választó */
-.destinationSelect {
-  padding: 5px 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  cursor: pointer;
-
-}
-
-
-.dateInput {
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-
-/* UTAS SZÁMLÁLÓ */
-.passengerCounter {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: #02007e;
-
-}
-
-.passengerLabel {
-  margin-right: 5px;
-  font-size: 14px;
-}
-
-.passengerBtn {
-  padding: 5px 10px;
-  border: none;
-  background-color: #2f8cf8;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.passengerBtn:hover {
-  background-color: #005eff;
-}
-
-.passengerNumber {
-  min-width: 20px;
-  text-align: center;
-  font-weight: bold;
-  color: rgb(#43adef);
-}
-
-
-.searchBtn {
-  padding: 5px 15px;
-  background-color: #2f8cf8;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
-}
-
-.searchBtn:hover {
-  background-color: #005eff;
-}
-
-
-
 /* KÉP ÉS CSOMAGOK GOMB */
 .imageContainer {
   position: relative;
@@ -125,9 +42,9 @@
 /* LAST MINUTE SECTION */
 .lastMinuteContainer {
   display: flex;
-  gap: 15px;                  
-  flex-wrap: nowrap;          
-  justify-content: space-between;
+  gap: 20px;                  
+  flex-wrap: wrap;          
+  justify-content: center;
   margin-bottom: 100px;
 }
 
@@ -150,7 +67,7 @@
   text-align: center;
   background-color: #fff;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  min-width: 150px; 
+  min-width: 250px; 
   height: 350px; 
   margin: 20px;   
   cursor: pointer;
@@ -166,7 +83,7 @@
 
 .lastMinuteCard img {
   width: 100%;
-  height: 120px;
+  height: 220px;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 10px;
@@ -202,3 +119,63 @@
   color: #3943ff;
 }
 
+
+
+
+/*MOBIL*/
+
+@media (max-width: 1024px) {
+  /* Banner gomb középre igazítása */
+  .packageBtn {
+    top: 55%;
+    left: 50%;
+    font-size: 20px;
+    width: 180px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Banner kisebb magasság */
+  .imageContainer {
+    height: 300px;
+  }
+
+  .packageBtn {
+    font-size: 18px;
+    width: 150px;
+    top: 50%;
+    left: 50%;
+  }
+
+  /* Last Minute kártyák mobilra */
+  .lastMinuteContainer {
+    flex-direction: column;  /* egymás alá */
+    gap: 15px;
+  }
+
+  .lastMinuteCard {
+    flex: 1 1 100%;
+    min-width: 80%;
+    height: auto; /* képek és szöveg határozza meg */
+  }
+
+  .lastMinuteCard img {
+    height: 200px;
+  }
+
+  /* Széles választék szekció mobilon */
+  .secContainer {
+    flex-direction: column;
+    gap: 20px;
+    width: 90%;
+    height: auto;
+  }
+
+  .secSectionDiv h2 {
+    font-size: 22px;
+  }
+
+  .secSectionDiv p {
+    font-size: 14px;
+  }
+}

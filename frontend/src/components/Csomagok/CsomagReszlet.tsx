@@ -48,7 +48,7 @@ function CsomagReszlet() {
 
     return (
         <div>
-            <button className={styles.visszaBtn} onClick={()=>navigate("/csomagok")}>vissza</button>
+            <button className={styles.visszaBtn} onClick={()=>navigate(-1)}>vissza</button>
 
 
             <div className={styles.sectionContainer}>
