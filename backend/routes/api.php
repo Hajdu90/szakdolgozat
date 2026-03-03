@@ -7,6 +7,7 @@ use App\Http\Controllers\LastMArController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UtazasiCsomagokController;
 use App\Http\Controllers\UtazasiModController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 
 use App\Http\Controllers\FoglalasokController;
 use Illuminate\Http\Request;
@@ -30,6 +31,7 @@ Route::post('/foglalasok', [FoglalasokController::class, 'store']);
 
 //Users
 Route::get('/users', [UserController::class, 'index']);
+Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 
 //Kepek
@@ -54,3 +56,5 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
         return response()->json(['ok' => true]);
     });
 });
+
+//Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
