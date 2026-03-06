@@ -109,6 +109,9 @@ function Header({
   const loggedInContent = (
     <div className={styles.loggedInBox}>
       <span className={styles.welcomeText}>Üdvözöllek, {loggedInUserName}</span>
+      {/*Kosar */}
+      <button className={styles.cartBtn}>🛒</button>
+
       <button className={styles.logoutBtn} onClick={handleLogout}>
         Kijelentkezes
       </button>
@@ -147,6 +150,11 @@ function Header({
           <a href="#" onClick={() => setIsMenuOpen(false)}>
             Rolunk
           </a>
+        </li>
+        <li>
+           <Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>
+           Utazasaim
+      </Link>
         </li>
 
         <div className={styles.mobileButtons}>

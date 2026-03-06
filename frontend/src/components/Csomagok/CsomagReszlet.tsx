@@ -27,6 +27,7 @@ interface Csomag {
     }
 }
 
+
 function CsomagReszlet() {
 
     const { id } = useParams();

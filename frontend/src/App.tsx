@@ -9,6 +9,8 @@ import Home from "./components/Home/Home";
 import CsomagReszlet from "./components/Csomagok/CsomagReszlet";
 import Footer from "./components/Footer/Footer";
 
+import Utazasaim from "./components/BejelentkezesUtan/Utazasaim";
+
 function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -133,6 +135,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/csomagok" element={<Csomagok />} />
         <Route path="/csomagok/:id" element={<CsomagReszlet />} />
+        <Route path="/utazasaim" element={<Utazasaim />} />
       </Routes>
       <Footer />
     </BrowserRouter>
