@@ -13,6 +13,7 @@ class Helyszin extends Model
         'orszag',
         'varos',
         'szallashely_tipus',
+        'leiras',
         'cim',
         'ferohely',
     ];

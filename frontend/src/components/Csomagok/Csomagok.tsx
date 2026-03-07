@@ -12,6 +12,8 @@ import style from "./Csomagok.module.css";
 
 import alapKep from "../pictures/alap.jpg";
 
+const API_BASE_URL = "http://localhost:8000";
+
 // const kepek: { [key: string]: string } = {
 //   cape_verde,
 //   montserrat,
@@ -30,6 +32,7 @@ interface Csomag {
   helyszin: {
     orszag: string;
     varos: string;
+    leiras?: string | null;
   };
 }
 
@@ -44,13 +47,21 @@ function Csomagok() {
 
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/utazasi_csomagoks")
-      .then((res) => res.json())
-      .then((data) => {
-        setCsomagok(data);
-        setCsomagKereso(data); 
+    fetch(`${API_BASE_URL}/api/utazasi_csomagoks`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
       })
-      .catch((err) => console.log("Hiba a Csomagok fetch-nél:", err));
+      .then((data) => {
+        const lista = Array.isArray(data) ? data : [];
+        setCsomagok(lista);
+        setCsomagKereso(lista);
+      })
+      .catch((err) => {
+        console.log("Hiba a Csomagok fetch-nél:", err);
+        setCsomagok([]);
+        setCsomagKereso([]);
+      });
   }, []);
 
   /* Kereso  */
@@ -137,6 +148,9 @@ function Csomagok() {
                 <div className={style.szovegContainer}>
                   <p className={style.orszagText}>{csomag.helyszin.orszag}</p>
                   <p className={style.varosText}>{csomag.helyszin.varos}</p>
+                  <p className={style.leirasText}>
+                    {csomag.helyszin.leiras ?? "Leírás hamarosan."}
+                  </p>
                   <p className={style.arText}>Ár: {csomag.ar} Ft</p>
                 </div>
               </div>

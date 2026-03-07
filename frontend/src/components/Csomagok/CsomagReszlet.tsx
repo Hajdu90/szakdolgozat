@@ -9,6 +9,8 @@ import kep1 from "../pictures/alap/1.jpg"
 import kep2 from "../pictures/alap/2.jpg"
 import kep3 from "../pictures/alap/3.jpg"
 
+const API_BASE_URL = "http://localhost:8000";
+
 
 interface Csomag {
     id: number;
@@ -37,11 +39,18 @@ function CsomagReszlet() {
     const [currentImg, setCurrentImg]=useState(kep1)
 
    useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/utazasi_csomagoks/${id}`)
-        .then(res => res.json())
+    fetch(`${API_BASE_URL}/api/utazasi_csomagoks/${id}`)
+        .then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+        })
         .then(data => {
             console.log("Fetched csomag:", data);
             setCsomag(data);
+        })
+        .catch((err) => {
+            console.log("Hiba a CsomagReszlet fetch-nél:", err);
+            setCsomag(null);
         });
 }, [id]);
 
