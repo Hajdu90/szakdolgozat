@@ -9,6 +9,7 @@ type HeaderProps = {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   setLoggedInUserName: Dispatch<SetStateAction<string>>;
   onLogin: (email: string, password: string) => Promise<void>;
+  isInitialUserSyncing: boolean;
 };
 
 function getCookie(name: string): string | null {
@@ -29,6 +30,7 @@ function Header({
   setIsLoggedIn,
   setLoggedInUserName,
   onLogin,
+  isInitialUserSyncing,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
@@ -118,6 +120,14 @@ function Header({
     </div>
   );
 
+  const authSkeleton = (
+    <div className={styles.authSkeleton} aria-hidden="true">
+      <span className={`${styles.skeletonBlock} ${styles.skeletonInput}`} />
+      <span className={`${styles.skeletonBlock} ${styles.skeletonInput}`} />
+      <span className={`${styles.skeletonBlock} ${styles.skeletonButton}`} />
+    </div>
+  );
+
 
   const [login,setLogin]=useState<boolean>(false);
   const [singUp,setSingUp]=useState<boolean>(false);
@@ -158,26 +168,32 @@ function Header({
         </li>
 
         <div className={styles.mobileButtons}>
-          {!isLoggedIn && (
+          {isInitialUserSyncing ? (
+            authSkeleton
+          ) : isLoggedIn ? (
+            loggedInContent
+          ) : (
             <>
               <button className={styles.regBtn}>Regisztracio</button>
               {loginForm}
             </>
           )}
-          {isLoggedIn && loggedInContent}
         </div>
       </ul>
 
       <div className={styles.rightSide}>
         <div className={styles.desktopButtons}>
           <div className={styles.btnWrapper}>
-            {!isLoggedIn && (
+            {isInitialUserSyncing ? (
+              authSkeleton
+            ) : isLoggedIn ? (
+              loggedInContent
+            ) : (
               <>
                 <button className={styles.regBtn}>Regisztracio</button>
                 {loginForm}
               </>
             )}
-            {isLoggedIn && loggedInContent}
           </div>
         </div>
 
