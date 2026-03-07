@@ -66,18 +66,18 @@ class UtazasiCsomagokSeeder extends Seeder
             'letszam'=>6,
             'szabad_helyek'=>0,
             'ar'=>50000,
-            
+
         ]);
 
          UtazasiCsomagok::factory()->create([
             'helyszin_id'=>3,
-            'indulasi_datum'=>'2026-03-20',
-            'visszaut_datum'=>'2026-03-25',
+            'indulasi_datum'=>'2026-03-14',
+            'visszaut_datum'=>'2026-03-18',
             'utazasi_mod_id'=>2,
             'letszam'=>4,
             'szabad_helyek'=>2,
             'ar'=>50000,
-            
+
         ]);
 
           UtazasiCsomagok::factory()->create([
@@ -88,7 +88,7 @@ class UtazasiCsomagokSeeder extends Seeder
             'letszam'=>4,
             'szabad_helyek'=>2,
             'ar'=>50000,
-            
+
         ]);
     }
 }
