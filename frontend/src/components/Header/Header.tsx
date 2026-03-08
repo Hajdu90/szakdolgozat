@@ -84,7 +84,7 @@ function Header({
     }
   };
 
-  // Segédkomponensek a tisztább kódért
+
   const loginForm = (
     <form className={styles.loginForm} onSubmit={handleLogin}>
       <input
@@ -145,7 +145,6 @@ function Header({
           </>
         )}
 
-        {/* Mobil gombok szekciója - Letisztítva */}
         <div className={styles.mobileButtons}>
           {isInitialUserSyncing ? (
             authSkeleton
