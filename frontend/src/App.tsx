@@ -19,9 +19,14 @@ function getCookie(name: string): string | null {
 }
 
 function App() {
+  // --- ÁLLAPOTOK (STATE) DEKLARÁCIÓJA ---
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoginInProgress, setIsLoginInProgress] = useState<boolean>(false);
   const [loggedInUserName, setLoggedInUserName] = useState<string>("");
+  
+
+  const [isAdmin, setIsAdmin] = useState<boolean>(false);
+  const [isInitialUserSyncing, setIsInitialUserSyncing] = useState<boolean>(true);
 
   const extractDisplayName = (user: any): string => {
     return user?.name || user?.nev || user?.email || "Felhasználó";
@@ -44,11 +49,13 @@ function App() {
       const user = await userResponse.json();
       setIsLoggedIn(true);
       setLoggedInUserName(extractDisplayName(user));
-    
+      
+   
       setIsAdmin(user.roles === true); 
       return true;
     } catch (error) {
       setIsLoggedIn(false);
+      setIsAdmin(false);
       return false;
     }
   };
