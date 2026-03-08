@@ -1,5 +1,5 @@
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
+import { Dispatch, FormEvent, SetStateAction, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Header.module.css";
 
 type HeaderProps = {
@@ -9,16 +9,15 @@ type HeaderProps = {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   setLoggedInUserName: Dispatch<SetStateAction<string>>;
   onLogin: (email: string, password: string) => Promise<void>;
+  isAdmin: boolean;
 };
 
 function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
-
   if (parts.length === 2) {
     return decodeURIComponent(parts.pop()!.split(";").shift()!);
   }
-
   return null;
 }
 
@@ -29,34 +28,41 @@ function Header({
   setIsLoggedIn,
   setLoggedInUserName,
   onLogin,
+  isAdmin
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  
+  //bejelentkezés után történjen navigáció
+  const [wasJustLoggedIn, setWasJustLoggedIn] = useState<boolean>(false);
+  
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn && wasJustLoggedIn) {
+      if (isAdmin) {
+        navigate("/admin");
+      } else {
+        navigate("/");
+      }
+      setWasJustLoggedIn(false); 
+    }
+  }, [isLoggedIn, isAdmin, navigate, wasJustLoggedIn]);
 
   const handleLogin = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
-
-    if (!email.trim() || !password) {
-      console.error("Email and password are required");
-      return;
-    }
-
+    if (!email.trim() || !password) return;
+    
     await onLogin(email.trim(), password);
+    setWasJustLoggedIn(true); 
   };
 
   const handleLogout = async (): Promise<void> => {
     try {
-      await fetch("http://localhost:8000/sanctum/csrf-cookie", {
-        credentials: "include",
-      });
-
+      await fetch("http://localhost:8000/sanctum/csrf-cookie", { credentials: "include" });
       const xsrfToken = getCookie("XSRF-TOKEN");
-
-      if (!xsrfToken) {
-        console.error("XSRF token not found");
-        return;
-      }
+      if (!xsrfToken) return;
 
       const response = await fetch("http://localhost:8000/logout", {
         method: "POST",
@@ -67,18 +73,14 @@ function Header({
         },
       });
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Logout failed:", response.status, errorText);
-        return;
+      if (response.ok) {
+        setIsLoggedIn(false);
+        setLoggedInUserName("");
+        setIsMenuOpen(false);
+        navigate("/"); 
       }
-
-      setIsLoggedIn(false);
-      setLoggedInUserName("");
-      setIsMenuOpen(false);
-      console.log("Logout successful");
     } catch (error) {
-      console.error("Logout request failed:", error);
+      console.error("Logout failed:", error);
     }
   };
 
@@ -95,90 +97,76 @@ function Header({
       <input
         className={styles.loginInput}
         type="password"
-        placeholder="Jelszo"
+        placeholder="Jelszó"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         disabled={isLoginInProgress}
       />
       <button className={styles.bejlnBtn} type="submit" disabled={isLoginInProgress}>
-        {isLoginInProgress ? "Bejelentkezes..." : "Bejelentkezes"}
+        {isLoginInProgress ? "Bejelentkezés..." : "Bejelentkezés"}
       </button>
     </form>
   );
 
   const loggedInContent = (
     <div className={styles.loggedInBox}>
-      <span className={styles.welcomeText}>Üdvözöllek, {loggedInUserName}</span>
-      {/*Kosar */}
-      <button className={styles.cartBtn}>🛒</button>
-
-      <button className={styles.logoutBtn} onClick={handleLogout}>
-        Kijelentkezes
-      </button>
+      <span className={styles.welcomeText}>Üdv, {loggedInUserName}</span>
+      {!isAdmin && <button className={styles.cartBtn}>🛒</button>}
+      <button className={styles.logoutBtn} onClick={handleLogout}>Kijelentkezés</button>
     </div>
   );
 
-
-  const [login,setLogin]=useState<boolean>(false);
-  const [singUp,setSingUp]=useState<boolean>(false);
-
-
-
-
-
   return (
-    <>
-      <header className={styles.headerTop}>
-        <div className={styles.logoWrapper}>
-          <a href="/" className={styles.logo}>
-            Viazy
-          </a>
-        </div>
+    <header className={styles.headerTop}>
+      <div className={styles.logoWrapper}>
+        <Link to="/" className={styles.logo}>Viazy</Link>
+      </div>
 
-        <ul className={`${styles.ulLista} ${isMenuOpen ? styles.active : ""}`}>
-        <li>
-          <Link to="/" onClick={() => setIsMenuOpen(false)}>
-            Fooldal
-          </Link>
-        </li>
-        <li>
-          <Link to="/csomagok" onClick={() => setIsMenuOpen(false)}>
-            Csomagok
-          </Link>
-        </li>
-        <li>
-          <a href="#" onClick={() => setIsMenuOpen(false)}>
-            Rolunk
-          </a>
-        </li>
-        <li>
-           <Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>
-           Utazasaim
-      </Link>
-        </li>
+      <ul className={`${styles.ulLista} ${isMenuOpen ? styles.active : ""}`}>
+        {isLoggedIn && isAdmin ? (
 
+          <li>
+            <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
+              Admin Panel
+            </Link>
+          </li>
+        ) : (
+           
+          <>
+            <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Főoldal</Link></li>
+            <li><Link to="/csomagok" onClick={() => setIsMenuOpen(false)}>Csomagok</Link></li>
+            <li><Link to="/rolunk" onClick={() => setIsMenuOpen(false)}>Rólunk</Link></li>
+            
+            {/* bejelentkezett sima felhasználónak */}
+            {isLoggedIn && !isAdmin && (
+              <li>
+                <Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>
+                  Utazásaim
+                </Link>
+              </li>
+            )}
+          </>
+        )}
+
+        {/* Mobil gombok szekciója */}
         <div className={styles.mobileButtons}>
-          {!isLoggedIn && (
+          {!isLoggedIn ? (
             <>
-              <button className={styles.regBtn}>Regisztracio</button>
               {loginForm}
+              <button className={styles.regBtn}>Regisztráció</button>
             </>
-          )}
-          {isLoggedIn && loggedInContent}
+          ) : loggedInContent}
         </div>
       </ul>
 
       <div className={styles.rightSide}>
         <div className={styles.desktopButtons}>
-          <div className={styles.btnWrapper}>
-            {!isLoggedIn && (
-              <>
-                <button className={styles.regBtn}>Regisztracio</button>
-                {loginForm}
-              </>
-            )}
-            {isLoggedIn && loggedInContent}
-          </div>
+          {!isLoggedIn ? (
+            <div className={styles.btnWrapper}>
+              <button className={styles.regBtn}>Regisztráció</button>
+              {loginForm}
+            </div>
+          ) : loggedInContent}
         </div>
 
         <div className={styles.hamburger} onClick={() => setIsMenuOpen(!isMenuOpen)}>
@@ -188,7 +176,6 @@ function Header({
         </div>
       </div>
     </header>
-    </>
   );
 }
 
