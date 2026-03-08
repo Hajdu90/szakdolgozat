@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('orszag',100);
             $table->string('varos',100);
             $table->string('szallashely_tipus',20);
+            $table->text('leiras');
             $table->string('cim',150);
             $table->integer('ferohely');
             $table->timestamps();

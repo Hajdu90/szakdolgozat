@@ -61,9 +61,16 @@ class UtazasiCsomagok extends Model
             return false;
         }
 
-        return Carbon::today()->gte(
-            Carbon::parse($this->indulasi_datum)->subDays(7)
-        );
+        $ma = Carbon::today();
+        $indulasiDatum = Carbon::parse($this->indulasi_datum)->startOfDay();
+
+        // Ha már elmúlt az indulási dátum, ne legyen lastminute
+        if ($indulasiDatum->lt($ma)) {
+            return false;
+        }
+
+        // Lastminute: legfeljebb 2 héten (14 napon) belül indul
+        return $indulasiDatum->lte($ma->copy()->addDays(14));
     }
 
     //Akciós ár számítás

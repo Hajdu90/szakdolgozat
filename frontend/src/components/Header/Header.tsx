@@ -10,6 +10,7 @@ type HeaderProps = {
   setLoggedInUserName: Dispatch<SetStateAction<string>>;
   onLogin: (email: string, password: string) => Promise<void>;
   isAdmin: boolean;
+  isInitialUserSyncing: boolean; 
 };
 
 function getCookie(name: string): string | null {
@@ -28,13 +29,12 @@ function Header({
   setIsLoggedIn,
   setLoggedInUserName,
   onLogin,
-  isAdmin
+  isAdmin,
+  isInitialUserSyncing,
 }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  
-  //bejelentkezés után történjen navigáció
   const [wasJustLoggedIn, setWasJustLoggedIn] = useState<boolean>(false);
   
   const navigate = useNavigate();
@@ -84,6 +84,7 @@ function Header({
     }
   };
 
+  // Segédkomponensek a tisztább kódért
   const loginForm = (
     <form className={styles.loginForm} onSubmit={handleLogin}>
       <input
@@ -116,6 +117,12 @@ function Header({
     </div>
   );
 
+  const authSkeleton = (
+    <div className={styles.authSkeleton} aria-hidden="true">
+      <div className={styles.skeletonBlock} />
+    </div>
+  );
+
   return (
     <header className={styles.headerTop}>
       <div className={styles.logoWrapper}>
@@ -124,49 +131,47 @@ function Header({
 
       <ul className={`${styles.ulLista} ${isMenuOpen ? styles.active : ""}`}>
         {isLoggedIn && isAdmin ? (
-
           <li>
-            <Link to="/admin" onClick={() => setIsMenuOpen(false)}>
-              Admin Panel
-            </Link>
+            <Link to="/admin" onClick={() => setIsMenuOpen(false)}>Admin Panel</Link>
           </li>
         ) : (
-           
           <>
             <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Főoldal</Link></li>
             <li><Link to="/csomagok" onClick={() => setIsMenuOpen(false)}>Csomagok</Link></li>
             <li><Link to="/rolunk" onClick={() => setIsMenuOpen(false)}>Rólunk</Link></li>
-            
-            {/* bejelentkezett sima felhasználónak */}
             {isLoggedIn && !isAdmin && (
-              <li>
-                <Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>
-                  Utazásaim
-                </Link>
-              </li>
+              <li><Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>Utazásaim</Link></li>
             )}
           </>
         )}
 
-        {/* Mobil gombok szekciója */}
+        {/* Mobil gombok szekciója - Letisztítva */}
         <div className={styles.mobileButtons}>
-          {!isLoggedIn ? (
+          {isInitialUserSyncing ? (
+            authSkeleton
+          ) : isLoggedIn ? (
+            loggedInContent
+          ) : (
             <>
               {loginForm}
               <button className={styles.regBtn}>Regisztráció</button>
             </>
-          ) : loggedInContent}
+          )}
         </div>
       </ul>
 
       <div className={styles.rightSide}>
         <div className={styles.desktopButtons}>
-          {!isLoggedIn ? (
+          {isInitialUserSyncing ? (
+            authSkeleton
+          ) : isLoggedIn ? (
+            loggedInContent
+          ) : (
             <div className={styles.btnWrapper}>
               <button className={styles.regBtn}>Regisztráció</button>
               {loginForm}
             </div>
-          ) : loggedInContent}
+          )}
         </div>
 
         <div className={styles.hamburger} onClick={() => setIsMenuOpen(!isMenuOpen)}>

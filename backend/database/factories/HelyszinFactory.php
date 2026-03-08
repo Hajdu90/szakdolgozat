@@ -22,6 +22,7 @@ class HelyszinFactory extends Factory
             'orszag' => $this->faker->country(),
             'varos' => $this->faker->city(),
             'szallashely_tipus' => $this->faker->randomElement($tipusok),
+            'leiras' => $this->faker->text(),
             'cim' => $this->faker->streetAddress(),
             'ferohely' => $this->faker->numberBetween(1, 20), // CHECK miatt >0
         ];

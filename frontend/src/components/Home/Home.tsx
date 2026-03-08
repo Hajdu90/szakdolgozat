@@ -7,6 +7,8 @@ import alapPic from "../pictures/alap.jpg"
 
 import { data, useNavigate, Link } from "react-router-dom";
 
+const API_BASE_URL = "http://localhost:8000";
+
 function Home() {
  
   const navigate=useNavigate();
@@ -15,9 +17,16 @@ function Home() {
   const [lastMin,setLastMinute]=useState<any []>([]);
 
   useEffect(()=>{
-    fetch("http://127.0.0.1:8000/api/utazasi_csomagoks")
-    .then(res => res.json())
-    .then(data=>setLastMinute(data));
+    fetch(`${API_BASE_URL}/api/utazasi_csomagoks`)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data=>setLastMinute(Array.isArray(data) ? data : []))
+    .catch((err) => {
+      console.log("Hiba a Home fetch-nél:", err);
+      setLastMinute([]);
+    });
   }, []);
 
   return (

@@ -22,7 +22,6 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [isLoginInProgress, setIsLoginInProgress] = useState<boolean>(false);
   const [loggedInUserName, setLoggedInUserName] = useState<string>("");
-  const [isAdmin, setIsAdmin] = useState<boolean>(false);
 
   const extractDisplayName = (user: any): string => {
     return user?.name || user?.nev || user?.email || "Felhasználó";
@@ -55,7 +54,13 @@ function App() {
   };
 
   useEffect(() => {
-    syncCurrentUser();
+    const initUserSync = async () => {
+      setIsInitialUserSyncing(true);
+      await syncCurrentUser();
+      setIsInitialUserSyncing(false);
+    };
+
+    initUserSync();
   }, []);
 
   const handleLogin = async (email: string, password: string): Promise<void> => {
@@ -93,6 +98,7 @@ function App() {
         isLoggedIn={isLoggedIn}
         loggedInUserName={loggedInUserName}
         isLoginInProgress={isLoginInProgress}
+        isInitialUserSyncing={isInitialUserSyncing}
         setIsLoggedIn={setIsLoggedIn}
         setLoggedInUserName={setLoggedInUserName}
         onLogin={handleLogin}
