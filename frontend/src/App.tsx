@@ -115,7 +115,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/csomagok" element={<Csomagok />} />
-        <Route path="/csomagok/:id" element={<CsomagReszlet />} />
+        <Route path="/csomagok/:id" element={<CsomagReszlet isLoggedIn={isLoggedIn} isAdmin={isAdmin}/>} />
         <Route path="/utazasaim" element={<Utazasaim />} />
         <Route 
           path="/admin" 

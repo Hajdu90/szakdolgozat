@@ -11,6 +11,10 @@ import kep3 from "../pictures/alap/3.jpg"
 
 const API_BASE_URL = "http://localhost:8000";
 
+type CsomagReszletPropsBejelentkezesUtan={
+    isLoggedIn:boolean;
+    isAdmin:boolean;
+}
 
 interface Csomag {
     id: number;
@@ -30,13 +34,15 @@ interface Csomag {
 }
 
 
-function CsomagReszlet() {
+function CsomagReszlet({isLoggedIn,isAdmin}: CsomagReszletPropsBejelentkezesUtan) {
 
     const { id } = useParams();
     const [csomag, setCsomag] = useState<Csomag | null>(null);
     const navigate=useNavigate();
 
     const [currentImg, setCurrentImg]=useState(kep1)
+
+     const [utas, setUtas] = useState(1);
 
    useEffect(() => {
     fetch(`${API_BASE_URL}/api/utazasi_csomagoks/${id}`)
@@ -107,7 +113,24 @@ function CsomagReszlet() {
                    </div>
 
                     
-                    <p className={styles.csAr}>Ár: {csomag.ar} Ft</p>
+                   
+
+                    <div className={styles.sectionThreeContainer}>
+                        <p className={styles.csAr}>Ár: {csomag.ar} Ft</p>
+
+                    {/*bejelentkezés után */}
+                    {isLoggedIn&& !isAdmin &&
+                    <div className={styles.passengerCounter}>
+                        <span style={{color:"#9ea8b9", fontWeight:"bold"}} >Utasok</span>
+                        <button className={styles.passengerSinginBtn} onClick={() => setUtas((prev) => Math.max(prev - 1, 1))}> - </button>
+                        <span  style={{color:"#5785d3", fontWeight:"bold",paddingLeft:"5px", paddingRight:"5px"}}>{utas}</span>
+                        <button
+                        className={styles.passengerSinginBtn} onClick={() => setUtas((prev) => Math.min(prev + 1, csomag.szabad_helyek))}>+</button>
+                    </div>}
+                   
+                    </div>
+                     {isLoggedIn && !isAdmin &&
+                    <button className={styles.kosarbaBtn} >kosárba</button>}
 
 
                 </section>
@@ -129,4 +152,3 @@ helyszin: utazasi_csomagoks -> helyszin_id->helyszins.id
 
  */
 
-{/* sari.eva@oif.gov.hu */}

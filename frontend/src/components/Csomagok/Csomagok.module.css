@@ -239,6 +239,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
+
 }
 .szabadhelyPtag{
     font-weight: 500;
@@ -311,6 +312,7 @@
   align-items: center;
   gap: 5px;
   color: #02007e;
+
 
 }
 
@@ -404,4 +406,54 @@
 
 
 
+/*Bejelentkezés Után*/
 
+
+.passengerSinginBtn{
+    border: none;
+    font-weight: bolder;
+    color: #1a4fb3;
+    height: 25px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    background-color: #cee1fe;
+    text-align: center;
+    box-shadow: 0 3px 5px rgba(70, 124, 255, 0.3);
+    cursor: pointer;
+    padding: 5px 8px;
+
+}
+
+
+.passengerSinginBtn:hover{
+     background-color: #74abff;
+     color: rgb(255, 255, 255);
+
+}
+
+.kosarbaBtn{
+    padding: 5px 15px;
+    background-color: #2f8cf8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+    float: right;
+    margin-right: 40px;
+
+}
+.kosarbaBtn:hover{
+    background-color: #e1794d;
+}
+
+.sectionThreeContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-right: 40px;
+
+}
