@@ -11,6 +11,10 @@ import Utazasaim from "./components/BejelentkezesUtan/Utazasaim";
 import Admin from "./components/Admin/Admin";
 import ProtectAdminRoute from "./components/Admin/ProtectAdminRoute";
 
+
+import { KosarProvider } from "./components/Kosar/KosarContext";
+import Kosar from "./components/Kosar/Kosar";
+
 function getCookie(name: string): string | null {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -27,6 +31,8 @@ function App() {
 
   const [isAdmin, setIsAdmin] = useState<boolean>(false);
   const [isInitialUserSyncing, setIsInitialUserSyncing] = useState<boolean>(true);
+
+  
 
   const extractDisplayName = (user: any): string => {
     return user?.name || user?.nev || user?.email || "Felhasználó";
@@ -100,7 +106,7 @@ function App() {
   };
 
   return (
-    <>
+    <KosarProvider>
       <Header
         isLoggedIn={isLoggedIn}
         loggedInUserName={loggedInUserName}
@@ -125,9 +131,11 @@ function App() {
             </ProtectAdminRoute>
           } 
         />
+
+        <Route path="/kosar" element={<Kosar />} />
       </Routes>
       <Footer />
-    </>
+    </KosarProvider>
   );
 }
 

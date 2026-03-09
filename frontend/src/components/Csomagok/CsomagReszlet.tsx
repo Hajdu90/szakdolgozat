@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 import styles from "./Csomagok.module.css"
 
+import { useKosar } from "../Kosar/KosarContext";
+
 //alapkepek egyenlőre
 
 import kep1 from "../pictures/alap/1.jpg"
@@ -42,7 +44,10 @@ function CsomagReszlet({isLoggedIn,isAdmin}: CsomagReszletPropsBejelentkezesUtan
 
     const [currentImg, setCurrentImg]=useState(kep1)
 
-     const [utas, setUtas] = useState(1);
+    const [utas, setUtas] = useState(1);
+
+    /*kosár */
+    const {kosarHozzaAd}=useKosar();
 
    useEffect(() => {
     fetch(`${API_BASE_URL}/api/utazasi_csomagoks/${id}`)
@@ -130,7 +135,12 @@ function CsomagReszlet({isLoggedIn,isAdmin}: CsomagReszletPropsBejelentkezesUtan
                    
                     </div>
                      {isLoggedIn && !isAdmin &&
-                    <button className={styles.kosarbaBtn} >kosárba</button>}
+                    <button className={styles.kosarbaBtn} onClick={()=>kosarHozzaAd({
+                        csomagId:csomag.id,
+                        nev:`${csomag.helyszin.orszag}, ${csomag.helyszin.varos}`,
+                        utasokSzama:utas,
+                        ar:csomag.ar,
+                    })} >kosárba</button>}
 
 
                 </section>

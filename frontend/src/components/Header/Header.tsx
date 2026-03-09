@@ -1,5 +1,6 @@
-import { Dispatch, FormEvent, SetStateAction, useState, useEffect } from "react";
+import { useState, Dispatch, SetStateAction, FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useKosar } from "../Kosar/KosarContext";
 import styles from "./Header.module.css";
 
 type HeaderProps = {
@@ -10,17 +11,8 @@ type HeaderProps = {
   setLoggedInUserName: Dispatch<SetStateAction<string>>;
   onLogin: (email: string, password: string) => Promise<void>;
   isAdmin: boolean;
-  isInitialUserSyncing: boolean; 
+  isInitialUserSyncing: boolean;
 };
-
-function getCookie(name: string): string | null {
-  const value = `; ${document.cookie}`;
-  const parts = value.split(`; ${name}=`);
-  if (parts.length === 2) {
-    return decodeURIComponent(parts.pop()!.split(";").shift()!);
-  }
-  return null;
-}
 
 function Header({
   isLoggedIn,
@@ -32,36 +24,30 @@ function Header({
   isAdmin,
   isInitialUserSyncing,
 }: HeaderProps) {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const [wasJustLoggedIn, setWasJustLoggedIn] = useState<boolean>(false);
-  
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [wasJustLoggedIn, setWasJustLoggedIn] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
   const navigate = useNavigate();
+  const { kosar, removeFromKosar } = useKosar();
 
-  useEffect(() => {
-    if (isLoggedIn && wasJustLoggedIn) {
-      if (isAdmin) {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
-      setWasJustLoggedIn(false); 
-    }
-  }, [isLoggedIn, isAdmin, navigate, wasJustLoggedIn]);
-
-  const handleLogin = async (event: FormEvent): Promise<void> => {
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
     if (!email.trim() || !password) return;
-    
     await onLogin(email.trim(), password);
-    setWasJustLoggedIn(true); 
+    setWasJustLoggedIn(true);
   };
 
-  const handleLogout = async (): Promise<void> => {
+  const handleLogout = async () => {
     try {
       await fetch("http://localhost:8000/sanctum/csrf-cookie", { credentials: "include" });
-      const xsrfToken = getCookie("XSRF-TOKEN");
+      const xsrfToken = document.cookie
+        .split("; ")
+        .find(row => row.startsWith("XSRF-TOKEN="))
+        ?.split("=")[1];
+
       if (!xsrfToken) return;
 
       const response = await fetch("http://localhost:8000/logout", {
@@ -77,13 +63,12 @@ function Header({
         setIsLoggedIn(false);
         setLoggedInUserName("");
         setIsMenuOpen(false);
-        navigate("/"); 
+        navigate("/");
       }
     } catch (error) {
       console.error("Logout failed:", error);
     }
   };
-
 
   const loginForm = (
     <form className={styles.loginForm} onSubmit={handleLogin}>
@@ -110,18 +95,58 @@ function Header({
   );
 
   const loggedInContent = (
-    <div className={styles.loggedInBox}>
-      <span className={styles.welcomeText}>Üdv, {loggedInUserName}</span>
-      {!isAdmin && <button className={styles.cartBtn}>🛒</button>}
-      <button className={styles.logoutBtn} onClick={handleLogout}>Kijelentkezés</button>
-    </div>
-  );
+  <div className={styles.loggedInBox}>
+    <span className={styles.welcomeText}>Üdv, {loggedInUserName}</span>
 
-  const authSkeleton = (
-    <div className={styles.authSkeleton} aria-hidden="true">
-      <div className={styles.skeletonBlock} />
-    </div>
-  );
+    {!isAdmin && (
+      <div className={styles.cartWrapper}>
+
+        <button className={styles.cartBtn} onClick={() => setIsCartOpen(!isCartOpen)}>
+          🛒
+        </button>
+        
+        {isCartOpen && (
+          <div className={styles.cartDropdown}>
+            <button className={styles.cartCloseBtn} onClick={() => setIsCartOpen(false)}>✖</button>
+            {kosar.length === 0 ? (
+              <p className={styles.emptyMsg}>A kosarad még üres</p>
+            ) : (
+              <>
+                <ul className={styles.cartList}>
+                  {kosar.map((elem) => (
+                    <li key={elem.csomagId} className={styles.cartItem}>
+                      <div className={styles.cartItemInfo}>
+                        <span className={styles.itemName}>{elem.nev}</span>
+                        <span className={styles.itemMeta}>
+                          {elem.utasokSzama} fő • {elem.ar * elem.utasokSzama} Ft
+                        </span>
+                      </div>
+                      <button
+                        className={styles.removeBtn}
+                        onClick={() => removeFromKosar(elem.csomagId)}
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+                <div className={styles.cartFooter}>
+                  <div className={styles.totalRow}>
+                    <span>Összesen:</span>
+                    <strong>{kosar.reduce((acc, curr) => acc + (curr.ar * curr.utasokSzama), 0)} Ft</strong>
+                  </div>
+                  <button className={styles.checkoutBtn}>Fizetés</button>
+                </div>
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    )}
+
+    <button className={styles.logoutBtn} onClick={handleLogout}>Kijelentkezés</button>
+  </div>
+);
 
   return (
     <header className={styles.headerTop}>
@@ -146,11 +171,7 @@ function Header({
         )}
 
         <div className={styles.mobileButtons}>
-          {isInitialUserSyncing ? (
-            authSkeleton
-          ) : isLoggedIn ? (
-            loggedInContent
-          ) : (
+          {isLoggedIn ? loggedInContent : (
             <>
               {loginForm}
               <button className={styles.regBtn}>Regisztráció</button>
@@ -161,11 +182,7 @@ function Header({
 
       <div className={styles.rightSide}>
         <div className={styles.desktopButtons}>
-          {isInitialUserSyncing ? (
-            authSkeleton
-          ) : isLoggedIn ? (
-            loggedInContent
-          ) : (
+          {isLoggedIn ? loggedInContent : (
             <div className={styles.btnWrapper}>
               <button className={styles.regBtn}>Regisztráció</button>
               {loginForm}
