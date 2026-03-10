@@ -11,6 +11,7 @@ interface KosarContextType {
   kosar: KosarElem[];
   kosarHozzaAd: (elem: KosarElem) => void;
   removeFromKosar: (csomagId: number) => void;
+  
 }
 
 const KosarContext = createContext<KosarContextType | undefined>(undefined);
@@ -37,6 +38,13 @@ const kosarHozzaAd = (elem: KosarElem) => {
   const removeFromKosar = (csomagId: number) => {
     setKosar((prev) => prev.filter((elem) => elem.csomagId !== csomagId));
   };
+
+
+  /*fizeteshez miutan fizetett töröljük a kosar tartalmat*/
+  const clearKosar=()=>setKosar([]);
+
+
+
 
   return (
     <KosarContext.Provider value={{ kosar, kosarHozzaAd, removeFromKosar }}>

@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, FormEvent } from "react";
+import { useState, Dispatch, SetStateAction, FormEvent, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useKosar } from "../Kosar/KosarContext";
 import styles from "./Header.module.css";
@@ -33,43 +33,58 @@ function Header({
   const navigate = useNavigate();
   const { kosar, removeFromKosar } = useKosar();
 
-  const handleLogin = async (event: FormEvent) => {
-    event.preventDefault();
+  useEffect(() => {
+    if (isLoggedIn && wasJustLoggedIn) {
+      if (isAdmin) navigate("/admin");
+      else navigate("/");
+      setWasJustLoggedIn(false);
+    }
+  }, [isLoggedIn, isAdmin, navigate, wasJustLoggedIn]);
+
+  const handleLogin = async (e: FormEvent) => {
+    e.preventDefault();
     if (!email.trim() || !password) return;
     await onLogin(email.trim(), password);
     setWasJustLoggedIn(true);
   };
 
-  const handleLogout = async () => {
-    try {
-      await fetch("http://localhost:8000/sanctum/csrf-cookie", { credentials: "include" });
-      const xsrfToken = document.cookie
-        .split("; ")
-        .find(row => row.startsWith("XSRF-TOKEN="))
-        ?.split("=")[1];
+ const handleLogout = async () => {
+  try {
+    // kiolvasni a tokent a sütikből
+    const xsrfToken = document.cookie
+      .split("; ")
+      .find(row => row.startsWith("XSRF-TOKEN="))
+      ?.split("=")[1];
 
-      if (!xsrfToken) return;
 
-      const response = await fetch("http://localhost:8000/logout", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          Accept: "application/json",
-          "X-XSRF-TOKEN": xsrfToken,
-        },
-      });
+   
+    const tokenToSend = xsrfToken ? decodeURIComponent(xsrfToken) : null;
 
-      if (response.ok) {
-        setIsLoggedIn(false);
-        setLoggedInUserName("");
-        setIsMenuOpen(false);
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Logout failed:", error);
+    const response = await fetch("http://localhost:8000/logout", {
+      method: "POST",
+      credentials: "include", 
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": tokenToSend || "", 
+      },
+    });
+
+    if (response.ok || response.status === 204) {
+      setIsLoggedIn(false);
+      setLoggedInUserName("");
+      setIsMenuOpen(false);
+      setIsCartOpen(false); 
+      navigate("/");
+    } else if (response.status === 419) {
+     
+       setIsLoggedIn(false);
+       navigate("/");
     }
-  };
-
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
   const loginForm = (
     <form className={styles.loginForm} onSubmit={handleLogin}>
       <input
@@ -94,59 +109,64 @@ function Header({
     </form>
   );
 
+  // --- Skeleton rész ---
+  const authSkeleton = (
+    <div className={styles.authSkeleton} aria-hidden="true">
+      <div className={styles.skeletonBlock} />
+    </div>
+  );
+
   const loggedInContent = (
-  <div className={styles.loggedInBox}>
-    <span className={styles.welcomeText}>Üdv, {loggedInUserName}</span>
+    <div className={styles.loggedInBox}>
+      <span className={styles.welcomeText}>Üdv, {loggedInUserName}</span>
 
-    {!isAdmin && (
-      <div className={styles.cartWrapper}>
-
-        <button className={styles.cartBtn} onClick={() => setIsCartOpen(!isCartOpen)}>
-          🛒
-        </button>
-        
-        {isCartOpen && (
-          <div className={styles.cartDropdown}>
-            <button className={styles.cartCloseBtn} onClick={() => setIsCartOpen(false)}>✖</button>
-            {kosar.length === 0 ? (
-              <p className={styles.emptyMsg}>A kosarad még üres</p>
-            ) : (
-              <>
-                <ul className={styles.cartList}>
-                  {kosar.map((elem) => (
-                    <li key={elem.csomagId} className={styles.cartItem}>
-                      <div className={styles.cartItemInfo}>
-                        <span className={styles.itemName}>{elem.nev}</span>
-                        <span className={styles.itemMeta}>
-                          {elem.utasokSzama} fő • {elem.ar * elem.utasokSzama} Ft
-                        </span>
-                      </div>
-                      <button
-                        className={styles.removeBtn}
-                        onClick={() => removeFromKosar(elem.csomagId)}
-                      >
-                        ✕
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-                <div className={styles.cartFooter}>
-                  <div className={styles.totalRow}>
-                    <span>Összesen:</span>
-                    <strong>{kosar.reduce((acc, curr) => acc + (curr.ar * curr.utasokSzama), 0)} Ft</strong>
+      {!isAdmin && (
+        <div className={styles.cartWrapper}>
+          <button className={styles.cartBtn} onClick={() => setIsCartOpen(!isCartOpen)}>
+            🛒 ({kosar.length})
+          </button>
+          {isCartOpen && (
+            <div className={styles.cartDropdown}>
+              <button className={styles.cartCloseBtn} onClick={() => setIsCartOpen(false)}>✖</button>
+              {kosar.length === 0 ? (
+                <p className={styles.emptyMsg}>A kosarad még üres</p>
+              ) : (
+                <>
+                  <ul className={styles.cartList}>
+                    {kosar.map((elem) => (
+                      <li key={elem.csomagId} className={styles.cartItem}>
+                        <div className={styles.cartItemInfo}>
+                          <span className={styles.itemName}>{elem.nev}</span>
+                          <span className={styles.itemMeta}>
+                            {elem.utasokSzama} fő • {elem.ar * elem.utasokSzama} Ft
+                          </span>
+                        </div>
+                        <button
+                          className={styles.removeBtn}
+                          onClick={() => removeFromKosar(elem.csomagId)}
+                        >
+                          ✕
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className={styles.cartFooter}>
+                    <div className={styles.totalRow}>
+                      <span>Összesen:</span>
+                      <strong>{kosar.reduce((acc, curr) => acc + (curr.ar * curr.utasokSzama), 0)} Ft</strong>
+                    </div>
+                    <button className={styles.checkoutBtn}>Fizetés</button>
                   </div>
-                  <button className={styles.checkoutBtn}>Fizetés</button>
-                </div>
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    )}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
-    <button className={styles.logoutBtn} onClick={handleLogout}>Kijelentkezés</button>
-  </div>
-);
+      <button className={styles.logoutBtn} onClick={handleLogout}>Kijelentkezés</button>
+    </div>
+  );
 
   return (
     <header className={styles.headerTop}>
@@ -171,23 +191,21 @@ function Header({
         )}
 
         <div className={styles.mobileButtons}>
-          {isLoggedIn ? loggedInContent : (
-            <>
-              {loginForm}
-              <button className={styles.regBtn}>Regisztráció</button>
-            </>
-          )}
+          {isInitialUserSyncing ? authSkeleton : (isLoggedIn ? loggedInContent : <>
+            {loginForm}
+            <button className={styles.regBtn}>Regisztráció</button>
+          </>)}
         </div>
       </ul>
 
       <div className={styles.rightSide}>
         <div className={styles.desktopButtons}>
-          {isLoggedIn ? loggedInContent : (
+          {isInitialUserSyncing ? authSkeleton : (isLoggedIn ? loggedInContent : (
             <div className={styles.btnWrapper}>
               <button className={styles.regBtn}>Regisztráció</button>
               {loginForm}
             </div>
-          )}
+          ))}
         </div>
 
         <div className={styles.hamburger} onClick={() => setIsMenuOpen(!isMenuOpen)}>
