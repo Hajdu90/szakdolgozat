@@ -55,6 +55,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin-test', function () {
         return response()->json(['ok' => true]);
     });
+
+    Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
 });
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
