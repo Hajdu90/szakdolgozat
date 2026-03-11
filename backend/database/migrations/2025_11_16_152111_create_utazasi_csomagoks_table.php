@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('visszaut_datum');
             $table->foreignId('utazasi_mod_id')->constrained('utazasi_mods');
             $table->integer('letszam');
-            $table->integer('szabad_helyek');
             $table->integer('ar');
             $table->timestamps();
 
@@ -27,9 +26,6 @@ return new class extends Migration
 
         DB::statement('ALTER TABLE utazasi_csomagoks
             ADD CONSTRAINT utazasi_csomagoks_letszam_check CHECK (letszam > 0)');
-
-        DB::statement('ALTER TABLE utazasi_csomagoks
-            ADD CONSTRAINT utazasi_csomagoks_szabad_helyek_check CHECK (szabad_helyek >= 0)');
 
         DB::statement('ALTER TABLE utazasi_csomagoks
             ADD CONSTRAINT utazasi_csomagoks_ar_check CHECK (ar >= 0)');
