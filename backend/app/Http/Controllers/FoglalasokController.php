@@ -78,16 +78,17 @@ class FoglalasokController extends Controller
     //Lekérdezés
 
     //Bejelentkezett user korábbi foglalásai
-    public function korabbiFoglalasok(Request  $request)
+    public function sajatFoglalasok(Request $request)
     {
         $user = $request->user();
 
         $foglalasok = $user->foglalasok()
-            ->with('utazasiCsomag')
-            ->whereDate('utazas_datuma', '<', Carbon::today())
-            ->orderByDesc('utazas_datuma')
+            ->with(['utazasiCsomag.helyszin', 'utazasiCsomag.utazasiMod'])
+            ->orderByDesc('created_at')
             ->get();
 
         return response()->json($foglalasok);
     }
+
+
 }

@@ -48,7 +48,7 @@ Route::post('/utazasi_mods', [UtazasiModController::class, 'index']);
 
 
 //Bejelentkezett user korábbi foglalás lekérdezés végpont
-Route::middleware('auth:sanctum')->get('/foglalasaim/korabbi', [FoglalasokController::class, 'korabbiFoglalasok']);
+Route::middleware('auth:sanctum')->get('/foglalasaim', [FoglalasokController::class, 'sajatFoglalasok']);
 
 //admin végpontok
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
