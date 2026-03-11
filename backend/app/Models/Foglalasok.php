@@ -18,6 +18,7 @@ class Foglalasok extends Model
         'letszam',
         'user_id',
         'aktualis_ar',
+        'fizetve'
     ];
 
     //Kapcsolat, utazási csomagra

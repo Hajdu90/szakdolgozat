@@ -11,6 +11,7 @@ interface KosarContextType {
   kosar: KosarElem[];
   kosarHozzaAd: (elem: KosarElem) => void;
   removeFromKosar: (csomagId: number) => void;
+  clearKosar: ()=>void;
   
 }
 
@@ -19,20 +20,45 @@ const KosarContext = createContext<KosarContextType | undefined>(undefined);
 export const KosarProvider = ({ children }: { children: ReactNode }) => {
   const [kosar, setKosar] = useState<KosarElem[]>([]);
 
-const kosarHozzaAd = (elem: KosarElem) => {
-  setKosar((prev) => {
-    const index = prev.findIndex(e => e.csomagId === elem.csomagId);
-    if (index !== -1) {
-      // nem tud tul menni az elerhető helyektől
-      const ujKosar = [...prev];
-      ujKosar[index] = {
-        ...ujKosar[index],
-        utasokSzama: elem.utasokSzama,
-      };
-      return ujKosar;
+
+
+const kosarHozzaAd = async (elem: KosarElem) => { 
+  try {
+   
+    const response = await fetch("http://localhost:8000/api/foglalasok", { 
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-XSRF-TOKEN": decodeURIComponent(document.cookie.split('XSRF-TOKEN=')[1]?.split(';')[0] || "")
+      },
+      body: JSON.stringify({
+        utazasi_csomagok_id: elem.csomagId,
+        letszam: elem.utasokSzama
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert(errorData.message || "Hiba a mentés során");
+      return;
     }
-    return [...prev, elem]; 
-  });
+
+
+    setKosar((prev) => {
+      const index = prev.findIndex(e => e.csomagId === elem.csomagId);
+      if (index !== -1) {
+        const ujKosar = [...prev];
+        ujKosar[index] = { ...ujKosar[index], utasokSzama: elem.utasokSzama };
+        return ujKosar;
+      }
+      return [...prev, elem];
+    });
+
+  } catch (error) {
+    console.error("Hiba történt:", error);
+  }
 };
 
   const removeFromKosar = (csomagId: number) => {
@@ -40,14 +66,14 @@ const kosarHozzaAd = (elem: KosarElem) => {
   };
 
 
-  /*fizeteshez miutan fizetett töröljük a kosar tartalmat*/
+
   const clearKosar=()=>setKosar([]);
 
 
 
 
   return (
-    <KosarContext.Provider value={{ kosar, kosarHozzaAd, removeFromKosar }}>
+    <KosarContext.Provider value={{ kosar, kosarHozzaAd, removeFromKosar,clearKosar }}>
       {children}
     </KosarContext.Provider>
   );

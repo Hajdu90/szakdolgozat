@@ -78,16 +78,33 @@ class FoglalasokController extends Controller
     //Lekérdezés
 
     //Bejelentkezett user korábbi foglalásai
-    public function korabbiFoglalasok(Request  $request)
-    {
-        $user = $request->user();
 
-        $foglalasok = $user->foglalasok()
-            ->with('utazasiCsomag')
-            ->whereDate('utazas_datuma', '<', Carbon::today())
-            ->orderByDesc('utazas_datuma')
-            ->get();
 
-        return response()->json($foglalasok);
+
+    
+
+    //fizeteshez:
+
+    public function checkout(Request $request)
+{
+    $user = $request->user();
+
+    // Csak azokat a foglalásokat állítjuk át, amik még nincsenek kifizetve
+    $foglalasok = Foglalasok::where('user_id', $user->id)
+        ->where('fizetve', false)
+        ->get();
+
+    if ($foglalasok->isEmpty()) {
+        return response()->json(['message' => 'Nincs kifizetendő foglalás az adatbázisban.'], 404);
     }
+
+    foreach ($foglalasok as $foglalas) {
+        $foglalas->fizetve = true;
+        $foglalas->save();
+        // A szabad_helyek automatikusan csökkenni fog a lekéréseknél a Modell Accessor miatt!
+    }
+
+    return response()->json(['message' => 'Sikeres fizetés!'], 200);
+}
+  
 }

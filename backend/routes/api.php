@@ -60,3 +60,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 });
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
+
+
+//fizeteshez
+
+Route::middleware('auth:sanctum')->post('/foglalasok/checkout', [FoglalasokController::class, 'checkout']);

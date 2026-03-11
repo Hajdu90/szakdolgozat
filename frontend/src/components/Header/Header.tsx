@@ -2,6 +2,7 @@ import { useState, Dispatch, SetStateAction, FormEvent, useEffect } from "react"
 import { Link, useNavigate } from "react-router-dom";
 import { useKosar } from "../Kosar/KosarContext";
 import styles from "./Header.module.css";
+import Fizetes from "../Fizetes/Fizetes";
 
 type HeaderProps = {
   isLoggedIn: boolean;
@@ -155,7 +156,7 @@ function Header({
                       <span>Összesen:</span>
                       <strong>{kosar.reduce((acc, curr) => acc + (curr.ar * curr.utasokSzama), 0)} Ft</strong>
                     </div>
-                    <button className={styles.checkoutBtn}>Fizetés</button>
+                    {kosar.length >0 && <Fizetes/>}
                   </div>
                 </>
               )}
