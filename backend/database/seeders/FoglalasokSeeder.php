@@ -14,8 +14,8 @@ class FoglalasokSeeder extends Seeder
      */
     public function run(): void
     {
-        \App\Models\Foglalasok::factory(10)->create();
-
+        //\App\Models\Foglalasok::factory(10)->create();
+        for ($i = 0; $i < 10; $i++) {\App\Models\Foglalasok::factory()->create();}
         //manuálisan:
         /*
         \App\Models\Foglalasok::create([

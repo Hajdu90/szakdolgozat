@@ -79,14 +79,22 @@ class FoglalasokController extends Controller
 
     //Bejelentkezett user korábbi foglalásai
 
+    public function sajatFoglalasok(Request $request)
+    {
+        $user = $request->user();
+
+        $foglalasok = $user->foglalasok()
+            ->with(['utazasiCsomag.helyszin', 'utazasiCsomag.utazasiMod'])
+            ->orderByDesc('created_at')
+            ->get();}
 
 
     
 
     //fizeteshez:
 
-    public function checkout(Request $request)
-{
+    public function checkout(Request $request){
+
     $user = $request->user();
 
     // Csak azokat a foglalásokat állítjuk át, amik még nincsenek kifizetve
@@ -107,4 +115,5 @@ class FoglalasokController extends Controller
     return response()->json(['message' => 'Sikeres fizetés!'], 200);
 }
   
+
 }

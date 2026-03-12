@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\Foglalasok;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -45,5 +46,10 @@ class User extends Authenticatable
             'password' => 'hashed',
             'roles' => 'boolean',
         ];
+    }
+
+    public function foglalasok()
+    {
+        return $this->hasMany(Foglalasok::class, 'user_id');
     }
 }
