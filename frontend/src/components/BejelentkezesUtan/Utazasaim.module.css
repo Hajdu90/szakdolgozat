@@ -1,0 +1,64 @@
+
+
+.utazasaimContainer {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.utazasaimTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0d47a1;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.utazasLista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+
+.utazasListaElem {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  border-left: 5px solid #1976d2;
+  padding: 5px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.utazasListaElem:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.utazasElemNev {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #0d47a1;
+  margin-bottom: 10px;
+}
+
+
+.utazasElemReszletek {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap; 
+}
+
+.utazasElemDatum,
+.utazasElemMod,
+.utazasElemAr,
+.utazasElemLetszam {
+  font-size: 0.95rem;
+  color: #424242;
+  margin: 0;
+  font-weight: 500;
+  white-space: nowrap;
+}

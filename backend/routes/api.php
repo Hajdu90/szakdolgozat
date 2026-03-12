@@ -65,3 +65,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 //fizeteshez
 
 Route::middleware('auth:sanctum')->post('/foglalasok/checkout', [FoglalasokController::class, 'checkout']);
+
+
+//UtazasaimListahoz:
+
+Route::middleware('auth:sanctum')->get('/utazasaim', [FoglalasokController::class, 'utazasaim']);

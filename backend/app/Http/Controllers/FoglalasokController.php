@@ -116,4 +116,26 @@ class FoglalasokController extends Controller
 }
   
 
+
+
+
+
+
+
+
+
+//UtazasaimListahoz:
+
+
+public function utazasaim()
+{
+    $foglalasok = Foglalasok::where('user_id', Auth::id())
+        ->where('fizetve', 1) 
+        ->with('utazasiCsomag.helyszin', 'utazasiCsomag.utazasiMod')
+        ->get();
+
+    return response()->json($foglalasok);
+}
+
+
 }
