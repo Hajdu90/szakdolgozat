@@ -86,6 +86,7 @@ function Header({
     console.error("Logout failed:", err);
   }
 };
+
   const loginForm = (
     <form className={styles.loginForm} onSubmit={handleLogin}>
       <input
