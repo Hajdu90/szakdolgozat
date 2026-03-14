@@ -95,6 +95,10 @@ function App() {
         body: JSON.stringify({ email, password }),
       });
 
+      if(!loginResponse.ok){
+        alert("beirt jelszo/felhasznalo nev hibás")
+      }
+
       if (loginResponse.ok) {
         await syncCurrentUser(); 
       }
@@ -103,6 +107,7 @@ function App() {
     } finally {
       setIsLoginInProgress(false);
     }
+    
   };
 
   return (
