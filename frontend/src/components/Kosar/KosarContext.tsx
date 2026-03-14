@@ -39,6 +39,10 @@ const kosarHozzaAd = async (elem: KosarElem) => {
       })
     });
 
+    if (response.ok){
+      alert("A csomag bekerült a kosárba")
+    }
+
     if (!response.ok) {
       const errorData = await response.json();
       alert(errorData.message || "Hiba a mentés során");

@@ -20,7 +20,7 @@ function Fizetes() {
         .find(row => row.startsWith("XSRF-TOKEN="))
 
         ?.split("=")[1];
-      //pedig "lefordítja" a szöveget (Sutik neha fura karatkerekbol allnak)
+      //pedig "lefordítja" a szöveget (Sutik neha fura karakTerekbol allnak)
       const tokenToSend = xsrfToken ? decodeURIComponent(xsrfToken) : "";
 
       // tényleges fizetési kérés a backendnek
@@ -38,7 +38,7 @@ function Fizetes() {
 
       if (valasz.ok) {
         // --- SIKERES ÁG ---
-        alert("Sikeres fizetés! Jó utat kívánunk!");
+        alert("Sikeres Foglalás! Jó utat kívánunk!");
         
  
         clearKosar();
@@ -48,7 +48,7 @@ function Fizetes() {
       } else {
         // --- HIBA ÁG ---
         // Például: "Nincs kifizetendő foglalás" vagy "Elfogyott a hely"
-        alert(data.message || "Valami hiba történt a fizetés során.");
+        alert(data.message || "Valami hiba történt a foglalás során.");
       }
     } catch (err) {
       console.error("Hiba a kérés során:", err);
@@ -61,7 +61,7 @@ function Fizetes() {
       <button 
         onClick={handleCheckout} 
         disabled={kosar.length === 0}>
-        {kosar.length === 0 ? "Üres a kosarad" : "fizetés"}
+        {kosar.length === 0 ? "Üres a kosarad" : "Foglalás"}
       </button>
     </div>
   );
