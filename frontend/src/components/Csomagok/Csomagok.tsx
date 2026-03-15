@@ -1,25 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import style from "./Csomagok.module.css";
-
-// képek
-// import cape_verde from "../pictures/firstPictures/cape_verde.jpg";
-// import montserrat from "../pictures/firstPictures/montserrat.jpg";
-// import hungary from "../pictures/firstPictures/hungary.jpg";
-// import costa_rica from "../pictures/firstPictures/costa_rica.jpg";
-
 
 import alapKep from "../pictures/alap.jpg";
 
 const API_BASE_URL = "http://localhost:8000";
-
-// const kepek: { [key: string]: string } = {
-//   cape_verde,
-//   montserrat,
-//   hungary,
-//   costa_rica,
-// };
 
 interface Csomag {
   id: number;
@@ -28,7 +13,6 @@ interface Csomag {
   szabad_helyek: number;
   indulasi_datum: string;
   visszaut_datum: string;
-
   helyszin: {
     orszag: string;
     varos: string;
@@ -45,11 +29,18 @@ function Csomagok() {
   const [datum, setDatum] = useState("");
   const [utas, setUtas] = useState(1);
 
-
   useEffect(() => {
-    fetch(`${API_BASE_URL}/api/utazasi_csomagoks`)
+   
+    fetch(`${API_BASE_URL}/api/utazasi_csomagoks`, {
+      method: "GET",
+      credentials: "include", // Ez biztosítja, hogy a Sanctum ne dobja el a kérést
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      }
+    })
       .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        if (!res.ok) throw new Error(`HTTP hiba! státusz: ${res.status}`);
         return res.json();
       })
       .then((data) => {
@@ -58,13 +49,13 @@ function Csomagok() {
         setCsomagKereso(lista);
       })
       .catch((err) => {
-        console.log("Hiba a Csomagok fetch-nél:", err);
+        console.error("Hiba a Csomagok fetch-nél:", err);
         setCsomagok([]);
         setCsomagKereso([]);
       });
   }, []);
 
-  /* Kereso  */
+  /* Kereső logika */
   const keresoFunkcio = () => {
     const ujLista = csomagok.filter((csomag) => {
       const orszagKeres = orszag ? csomag.helyszin.orszag === orszag : true;
@@ -82,16 +73,14 @@ function Csomagok() {
 
   return (
     <div>
-      {/* Keresés */}
+      {/* Keresés szekció */}
       <header className={style.homeHeader}>
         <select
           className={style.destinationSelect}
           value={orszag}
           onChange={(e) => setOrszag(e.target.value)}
         >
-          <option value="" disabled>
-            Hova szeretne utazni?
-          </option>
+          <option value="" disabled>Hova szeretne utazni?</option>
           <option value="Orszag1">Orszag1</option>
           <option value="Orszag2">Orszag2</option>
           <option value="Orszag3">Orszag3</option>
@@ -110,16 +99,12 @@ function Csomagok() {
           <button
             className={style.passengerBtn}
             onClick={() => setUtas((prev) => Math.max(prev - 1, 1))}
-          >
-            -
-          </button>
+          > - </button>
           <span className={style.passengerNumber}>{utas}</span>
           <button
             className={style.passengerBtn}
             onClick={() => setUtas((prev) => Math.min(prev + 1, 10))}
-          >
-            +
-          </button>
+          > + </button>
         </div>
 
         <button className={style.searchBtn} onClick={keresoFunkcio}>
@@ -127,7 +112,7 @@ function Csomagok() {
         </button>
       </header>
 
-      {/* Csomag listazasa */}
+      {/* Csomagok listázása */}
       <div className={style.csomagContainer}>
         {csomagKereso.length > 0 ? (
           csomagKereso.map((csomag) => (
@@ -138,11 +123,7 @@ function Csomagok() {
             >
               <div className={style.divContainer}>
                 <div className={style.firstpicture}>
-                  <img
-                    // src={kepek[csomag.helyszin.orszag.toLowerCase()] || alap}
-                    // alt={csomag.helyszin.orszag}
-                    src={alapKep}
-                  />
+                  <img src={alapKep} alt={csomag.helyszin.orszag} />
                 </div>
 
                 <div className={style.szovegContainer}>

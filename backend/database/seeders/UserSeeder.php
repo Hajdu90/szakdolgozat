@@ -20,6 +20,13 @@ class UserSeeder extends Seeder
         'roles' => true,
         ]);
 
+         User::create([
+        'name' => 'teszt Vasarlo',
+        'email' => 'tesztVasarlo@teszt.hu',
+        'password' => Hash::make('password'),
+        'roles' => false,
+        ]);
+
         User::factory(10)->create();
     }
 }
