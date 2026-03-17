@@ -10,7 +10,7 @@ import Admin from "./components/Admin/Admin";
 import ProtectAdminRoute from "./components/Admin/ProtectAdminRoute";
 import { KosarProvider } from "./components/Kosar/KosarContext";
 import Kosar from "./components/Kosar/Kosar";
-import Regisztacio from "./components/Regisztracio/Regisztracio";
+
 import { AuthProvider } from "./components/Authorization/AuthContext"; 
 
 function App() {
@@ -30,7 +30,6 @@ function App() {
             </ProtectAdminRoute>
           } />
           <Route path="/kosar" element={<Kosar />} />
-          <Route path="/register" element={<Regisztacio/>}/>
         </Routes>
         <Footer />
       </KosarProvider>

@@ -6,21 +6,40 @@ import styles from "./Header.module.css";
 import Fizetes from "../Fizetes/Fizetes";
 
 function Header() {
-  const { isLoggedIn, user, isAdmin, isInitialSync, loading, login, logout } = useAuth();
+  const { isLoggedIn, user, isAdmin, isInitialSync, loading, login, logout,register } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [wasJustLoggedIn, setWasJustLoggedIn] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+
+  //Regisztració Statek
+  const [isRegOpen, setIsRegOpen] = useState(false);
+  const [regName, setRegName] = useState("");
+  const [regEmail, setRegEmail] = useState("");
+  const [regPassword, setRegPassword] = useState("");
+  const [regPasswordConf, setRegPasswordConf] = useState("");
+  const [localErr, setLocalErr] = useState<string | null>(null);
+ 
+
+
+ 
+
   const navigate = useNavigate();
   const { kosar, removeFromKosar } = useKosar();
+
+  const [isLoginOpen,setIsLoginOpen]=useState(false);
+
+
 
   useEffect(() => {
     if (isLoggedIn && wasJustLoggedIn) {
       if (isAdmin) navigate("/admin");
       else navigate("/");
       setWasJustLoggedIn(false);
+      setIsLoginOpen(false);
+      setIsRegOpen(false)
     }
   }, [isLoggedIn, isAdmin, navigate, wasJustLoggedIn]);
 
@@ -36,16 +55,69 @@ function Header() {
     }
   };
 
-  // Login form
-  const loginForm = (
+
+  const loginForm=(
     <form className={styles.loginForm} onSubmit={handleLogin}>
-      <input className={styles.loginInput} type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} disabled={loading} />
-      <input className={styles.loginInput} type="password" placeholder="Jelszó" value={password} onChange={e => setPassword(e.target.value)} disabled={loading} />
+      <input className={styles.loginInput} 
+      type="email"
+      placeholder="Email" 
+      value={email}
+      onChange={(e)=>setEmail(e.target.value)}
+      disabled={loading}
+      required
+      />
+
+      <input className={styles.loginInput}
+      type="password" 
+      placeholder="Jelszó"
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      disabled={loading}
+      required
+      />
       <button className={styles.bejlnBtn} type="submit" disabled={loading}>
-        {loading ? "Bejelentkezés..." : "Bejelentkezés"}
+        {loading ? "Bejelentkezés":"Bejelentkezés"}
       </button>
+
+
     </form>
-  );
+  )
+
+
+
+  //Regisztracio Kezelése:
+  const handleRegSubmit=async(e:FormEvent)=>{
+    e.preventDefault();
+    setLocalErr(null);
+    if(!regName || !regEmail || !regPassword || !regPasswordConf){
+      setLocalErr("Minden mező kitöltése kötelező");
+      return;
+    }
+
+    const ok = await register(regName, regEmail, regPassword, regPasswordConf);
+    if(ok){
+      navigate("/");
+      setIsRegOpen(false);
+    }else{
+      setLocalErr("A regisztració nem sikerült")
+    }
+  };
+
+   const regForm = (
+        <form className={styles.loginForm} onSubmit={handleRegSubmit}>
+        
+            <input type="text" placeholder="Név" value={regName} onChange={e => setRegName(e.target.value)} disabled={loading} />
+            <input type="email" placeholder="Email" value={regEmail} onChange={e => setRegEmail(e.target.value)} disabled={loading} />
+            <input type="password" placeholder="Jelszó" value={regPassword} onChange={e => setRegPassword(e.target.value)} disabled={loading} />
+            <input type="password" placeholder="Megerősítés" value={regPasswordConf} onChange={e => setRegPasswordConf(e.target.value)} disabled={loading} />
+            <button type="submit" disabled={loading}  className={styles.bejlnBtn}>{loading ? "Regisztráció..." : "Regisztráció"}</button>
+            {localErr && <p style={{ color: "red" }}>{localErr}</p>}
+        </form>)
+
+
+
+
+
 
   // Bejelentkezett felhasználó tartalom
   const loggedInContent = (
@@ -101,6 +173,7 @@ function Header() {
   );
 
   return (
+    <>
     <header className={styles.headerTop}>
       <div className={styles.logoWrapper}>
         <Link to="/" className={styles.logo}>Viazy</Link>
@@ -120,8 +193,14 @@ function Header() {
 
         <div className={styles.mobileButtons}>
           {isInitialSync ? authSkeleton : (isLoggedIn ? loggedInContent : <>
-            {loginForm}
-            <Link to="/register" className={styles.regBtn}>Regisztráció</Link>
+
+            <button className={styles.bejlnBtn} onClick={()=>setIsLoginOpen(true)}>
+              Bejelentkezes
+            </button>
+
+             <button className={styles.regBtn} onClick={()=>setIsRegOpen(true)}>Regisztráció</button>
+
+            
           </>)}
         </div>
       </ul>
@@ -130,8 +209,10 @@ function Header() {
         <div className={styles.desktopButtons}>
           {isInitialSync ? authSkeleton : (isLoggedIn ? loggedInContent : (
             <div className={styles.btnWrapper}>
-              <Link to="/register" className={styles.regBtn}>Regisztráció</Link>
-              {loginForm}
+              <button className={styles.regBtn} onClick={()=>setIsRegOpen(true)}>Regisztráció</button>
+              <button className={styles.bejlnBtn} onClick={()=> setIsLoginOpen(true)}>
+                Bejelentkezes 
+              </button>
             </div>
           ))}
         </div>
@@ -143,6 +224,31 @@ function Header() {
         </div>
       </div>
     </header>
+
+    {/*Bejelentkezeshez-Felugro Ablak */}
+    {isLoginOpen && (
+      <div className={styles.loginModal}>
+        <div className={styles.loginModalContent}>
+          <button className={styles.loginClose} onClick={()=>setIsLoginOpen(false)}>
+            X
+          </button>
+          {loginForm}
+        </div>
+      </div>
+    )}
+
+    {/*Regisztaciohóz Modal */}
+     {isRegOpen && (
+      <div className={styles.loginModal}>
+        <div className={styles.loginModalContent}>
+          <button className={styles.loginClose} onClick={()=>setIsRegOpen(false)}>
+            X
+          </button>
+          {regForm}
+        </div>
+      </div>
+    )}
+    </>
   );
 }
 

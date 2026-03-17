@@ -91,7 +91,7 @@ function CsomagReszlet() {
                     <div className={styles.sectionThreeContainer}>
                         <p className={styles.csAr}>Ár: {csomag.ar} Ft</p>
 
-                        // 
+                        
                         {isLoggedIn && !isAdmin && (
                             <div className={styles.passengerCounter}>
                                 <span style={{color:"#9ea8b9", fontWeight:"bold"}}>Utasok</span>
