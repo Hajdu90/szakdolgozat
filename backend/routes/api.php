@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 //Publikus végpontok
 //Utazasok
 Route::get('/utazasi_csomagoks',[UtazasiCsomagokController::class,'index']);
-Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
+//Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
 Route::get('/utazasi_csomagoks/{id}', [UtazasiCsomagokController::class,'show']);
 
 
@@ -30,8 +30,8 @@ Route::get('/foglalasok', [FoglalasokController::class, 'index']);
 Route::post('/foglalasok', [FoglalasokController::class, 'store']);
 
 //Users
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/users/{id}', [UserController::class, 'show']);
+//Route::get('/users', [UserController::class, 'index']);
+//Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/users', [UserController::class, 'store']);
 
 //Kepek
@@ -47,26 +47,23 @@ Route::get('/utazasi_mods', [UtazasiModController::class, 'index']);
 Route::post('/utazasi_mods', [UtazasiModController::class, 'index']);
 
 
-//Bejelentkezett user korábbi foglalás lekérdezés végpont
-Route::middleware('auth:sanctum')->get('/foglalasaim', [FoglalasokController::class, 'sajatFoglalasok']);
-
 //admin végpontok
 Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin-test', function () {
         return response()->json(['ok' => true]);
     });
-
+    Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
+    Route::get('/users', [UserController::class, 'index']);
     Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
 });
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
 
+//Bejelentkezett user korábbi foglalás lekérdezés végpont
+Route::middleware('auth:sanctum')->get('/foglalasaim', [FoglalasokController::class, 'sajatFoglalasok']);
 
 //fizeteshez
-
 Route::middleware('auth:sanctum')->post('/foglalasok/checkout', [FoglalasokController::class, 'checkout']);
 
-
 //UtazasaimListahoz:
-
 Route::middleware('auth:sanctum')->get('/utazasaim', [FoglalasokController::class, 'utazasaim']);
