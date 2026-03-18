@@ -20,6 +20,18 @@ interface AuthContextType{
         passConf:string
     )=>Promise<boolean>
     logout:()=>Promise<void>;
+
+
+    //ujCsomag létreHozása
+    createCsomag: (adatok: {
+    helyszin_id: number;
+    utazasi_mod_id: number;
+    ar: number;
+    letszam:number;
+    indulasi_datum: string;
+    visszaut_datum: string;
+  }) => Promise<any>;
+    
 }
 
 const AuthContext= createContext<AuthContextType | undefined>(undefined);
@@ -167,6 +179,38 @@ export const AuthProvider=({children}: {children:React.ReactNode})=>{
   },[]); //ez jelenti h csak 1x fusson le
 
 
+
+  // Új utazási csomag létrehozása (Admin)
+const createCsomag = async (adatok: {
+  helyszin_id: number;
+  utazasi_mod_id: number;
+  ar: number;
+  indulasi_datum: string;
+  visszaut_datum: string;
+}) => {
+  await ensureCsrf(); // CSRF sütit lekérjük
+
+  const res = await fetch("http://localhost:8000/api/utazasi-csomagok", {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+    },
+    body: JSON.stringify(adatok),
+  });
+
+  if (!res.ok) {
+    throw new Error("Nem sikerült létrehozni az utazási csomagot");
+  }
+
+  return await res.json();
+};
+
+
+
+
  return (
     <AuthContext.Provider value={{ 
       isLoggedIn: !!user, //true ha van felhasznalo
@@ -176,7 +220,8 @@ export const AuthProvider=({children}: {children:React.ReactNode})=>{
       isInitialSync, //elso lekeres kesz-e
       login, 
       register, 
-      logout 
+      logout,
+      createCsomag,
     }}>
       {children}
     </AuthContext.Provider>

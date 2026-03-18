@@ -75,7 +75,7 @@ function CsomagReszlet() {
 
                 <section className={styles.infoSection}>
                     <h2 className={styles.csomagTitle}>{csomag.helyszin.orszag}, {csomag.helyszin.varos}</h2>
-                    <p className={styles.csLeiras}>Leirás: Lorem ipsum dolor sit amet...</p>
+                    <p className={styles.csLeiras}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, unde quo! Maiores reiciendis, ea inventore quidem obcaecati pariatur, quo in dolore dolores libero, officiis provident vel! Nemo est odio aliquid!</p>
 
                     <div>
                         <div className={styles.idopont}>
@@ -85,6 +85,10 @@ function CsomagReszlet() {
                         <div className={styles.infoContaners}>
                             <p style={{color:"#9ea8b9", fontWeight:"bold"}}>Szabad helyek:</p>
                             <p className={styles.szabadhelyPtag}> {csomag.szabad_helyek}</p>
+                        </div>
+                        <div className={styles.infoContaners}>
+                            <p style={{color:"#9ea8b9", fontWeight:"bold"}}> Utazásimod:</p>
+                            <p className={styles.utazasimodePtag} >{csomag.utazasi_mod.tipus}</p>
                         </div>
                     </div>
 
