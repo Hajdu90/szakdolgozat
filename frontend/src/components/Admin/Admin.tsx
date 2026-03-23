@@ -6,18 +6,22 @@ import LastMinute from "./Menupontok/LastMinute";
 import Utazasok from "./Menupontok/Utazasok";
 
 
+import styles from "./Menupontok/MenuPontok.module.css"
+import { types } from "util";
+
+
 function Admin(){
     const [activeTab,setActiveTab]=useState<"utazasok" | "Létrehozás" | "aktiv" |"lastminute">("utazasok");
 
 
 
     return(
-        <div>
-        <div>
-            <button onClick={()=> setActiveTab("utazasok")}>Utazasok</button>
-            <button onClick={()=> setActiveTab("Létrehozás")}>Létrehozás</button>
-            <button onClick={()=> setActiveTab("aktiv")}>aktiv</button>
-            <button onClick={()=> setActiveTab("lastminute")}>lastminute</button>
+        <div className={styles.adminContainer} >
+        <div className={styles.adminTabButt}>
+            <button onClick={()=> setActiveTab("utazasok")} className={styles.aButton}>Utazasok</button>
+            <button onClick={()=> setActiveTab("Létrehozás")} className={styles.aButton}>Létrehozás</button>
+            <button onClick={()=> setActiveTab("aktiv")} className={styles.aButton}>aktiv</button>
+            <button onClick={()=> setActiveTab("lastminute")}className={styles.aButton}>lastminute</button>
         </div>
 
         <div>

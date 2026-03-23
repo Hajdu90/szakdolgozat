@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import styles from "./MenuPontok.module.css"
+
 const API_BASE_URL = "http://localhost:8000";
 
 interface Csomag {
@@ -45,17 +47,22 @@ function LastMinute() {
   }, []);
 
   return (
-    <div>
+    <div className={styles.listcontainer}>
       <h2>Last Minute Utazások</h2>
-      <table>
+      <div className={styles.tableWrapper}>
+      <table className={styles.table}> 
         <thead>
           <tr>
+            <th>id</th>
             <th>Ország</th>
             <th>Város</th>
             <th>Utazási mód</th>
+             <th>Szabad helyek</th>
             <th>Ár</th>
             <th>LastMinute ár</th>
-            <th>Szabad helyek</th>
+            <th>Indulás</th>
+            <th>Vissza dátum</th>
+            
           </tr>
         </thead>
         <tbody>
@@ -63,17 +70,21 @@ function LastMinute() {
             .filter(csomag => csomag.is_lastminute)
             .map(csomag => (
               <tr key={csomag.id}>
+                <td>{csomag.id}</td>
                 <td>{csomag.helyszin.orszag}</td>
                 <td>{csomag.helyszin.varos}</td>
                 <td>{csomag.utazasi_mod.tipus}</td>
-                <td>{csomag.ar}</td>
-                <td>{csomag.akcios_ar}</td>
                 <td>{csomag.szabad_helyek}</td>
+                <td>{csomag.ar} Ft</td>
+                <td>{csomag.akcios_ar} Ft</td>
+                <td>{csomag.indulasi_datum}</td>
+                <td>{csomag.visszaut_datum}</td>
               </tr>
             ))
           }
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
