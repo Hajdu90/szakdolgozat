@@ -26,6 +26,7 @@ function Csomagok() {
 
   /* Keresohoz */
   const [orszag, setOrszag] = useState("");
+  const [helyszin, setHelyszin] = useState<any[]>([]);
   const [datum, setDatum] = useState("");
   const [utas, setUtas] = useState(1);
 
@@ -53,16 +54,42 @@ function Csomagok() {
         setCsomagok([]);
         setCsomagKereso([]);
       });
+
+
+        //  HELYSZÍNEK FETCH-keresöhöz
+    fetch(`${API_BASE_URL}/api/helyszins`)
+      .then((res) => res.json())
+      .then((data) => {
+        const lista = Array.isArray(data) ? data : [];
+        setHelyszin(lista);
+      })
+      .catch((err) => {
+        console.error("Hiba a helyszínek fetch-nél:", err);
+        setHelyszin([]);
+         });
+
+
+
+
   }, []);
 
   /* Kereső logika */
   const keresoFunkcio = () => {
+
+     if (!orszag && !datum && utas === 1) {
+    setCsomagKereso(csomagok);
+    return;
+  }
+
     const ujLista = csomagok.filter((csomag) => {
       const orszagKeres = orszag ? csomag.helyszin.orszag === orszag : true;
+
       const datumKeres = datum
         ? new Date(csomag.indulasi_datum) <= new Date(datum) &&
           new Date(csomag.visszaut_datum) >= new Date(datum)
         : true;
+
+
       const szabadHelyek = csomag.szabad_helyek >= utas;
 
       return orszagKeres && datumKeres && szabadHelyek;
@@ -70,21 +97,35 @@ function Csomagok() {
 
     setCsomagKereso(ujLista);
   };
+  
 
   return (
     <div>
       {/* Keresés szekció */}
       <header className={style.homeHeader}>
+
+        <button className={style.searchBtn} onClick={() => {
+            setOrszag("");
+            setDatum("");
+            setUtas(1);
+            setCsomagKereso(csomagok);
+          }}>
+           Összes csomag
+          </button>
+
+
         <select
           className={style.destinationSelect}
           value={orszag}
           onChange={(e) => setOrszag(e.target.value)}
         >
           <option value="" disabled>Hova szeretne utazni?</option>
-          <option value="Orszag1">Orszag1</option>
-          <option value="Orszag2">Orszag2</option>
-          <option value="Orszag3">Orszag3</option>
-          <option value="Orszag4">Orszag4</option>
+          {helyszin.map((h)=>(
+            <option key={h.id} value={h.orszag}> 
+            {h.orszag} - {h.varos}
+            </option>
+          ))}
+         
         </select>
 
         <input
@@ -129,9 +170,8 @@ function Csomagok() {
                 <div className={style.szovegContainer}>
                   <p className={style.orszagText}>{csomag.helyszin.orszag}</p>
                   <p className={style.varosText}>{csomag.helyszin.varos}</p>
-                  <p className={style.leirasText}>
-                    {csomag.helyszin.leiras ?? "Leírás hamarosan."}
-                  </p>
+      
+                  
                   <p className={style.arText}>Ár: {csomag.ar} Ft</p>
                 </div>
               </div>

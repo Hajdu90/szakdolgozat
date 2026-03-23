@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Authorization/AuthContext"; 
-
+import styles from "./MenuPontok.module.css"
 
 
 const api_base_url="http://localhost:8000";
@@ -56,12 +56,12 @@ function UjUtazas(){
       };
 
       return(
-        <div>
-            <h1>Új utazási Csomag Létrehozása</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
+        <div >
+            <form onSubmit={handleSubmit} className={styles.newPackageContainer}>
+                <div >
+                    <h2>Új csomag létrehozás</h2>
                     <label >Helyszin:</label>
-                    <select value={helyszinId} onChange={e => setHelyszinId(Number(e.target.value))}>
+                    <select value={helyszinId} onChange={e => setHelyszinId(Number(e.target.value))} className={styles.newPacHelySelect}>
                         {helyszin.map(h =>(
                             <option key={h.id} value={h.id}>
                                 {h.orszag}-{h.varos}

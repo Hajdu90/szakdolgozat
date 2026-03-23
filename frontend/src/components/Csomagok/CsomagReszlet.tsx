@@ -22,6 +22,7 @@ interface Csomag {
     helyszin: {
         orszag: string;
         varos: string;
+        leiras?: string | null;
     };
     utazasi_mod: {
         tipus: string;
@@ -75,7 +76,7 @@ function CsomagReszlet() {
 
                 <section className={styles.infoSection}>
                     <h2 className={styles.csomagTitle}>{csomag.helyszin.orszag}, {csomag.helyszin.varos}</h2>
-                    <p className={styles.csLeiras}>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minus, unde quo! Maiores reiciendis, ea inventore quidem obcaecati pariatur, quo in dolore dolores libero, officiis provident vel! Nemo est odio aliquid!</p>
+                    <p className={styles.csLeiras}>{csomag.helyszin.leiras}</p>
 
                     <div>
                         <div className={styles.idopont}>

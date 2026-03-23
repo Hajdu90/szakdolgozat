@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import UjUtazas from "./Menupontok/UjUtazas";
 import AktivUtazasok from "./Menupontok/AktivUtazasok";
@@ -11,8 +11,16 @@ import { types } from "util";
 
 
 function Admin(){
-    const [activeTab,setActiveTab]=useState<"utazasok" | "Létrehozás" | "aktiv" |"lastminute">("utazasok");
+    // const [activeTab,setActiveTab]=useState<"utazasok" | "Létrehozás" | "aktiv" |"lastminute">("utazasok");
+    const [activeTab, setActiveTab] = useState<"utazasok" | "Létrehozás" | "aktiv" | "lastminute">(() => {
+    return (localStorage.getItem("activeTab") as any) || "utazasok";
+    });
+    
 
+
+useEffect(() => {
+  localStorage.setItem("activeTab", activeTab);
+}, [activeTab]);
 
 
     return(

@@ -96,3 +96,68 @@
 }
 
 
+
+
+                                       /*Uj utazás leirás hianyzik */
+.newPackageContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width:500px;
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 35px;
+    box-shadow: 0 2px 8px rgba(0, 8, 255, 0.363);
+}
+
+.newPackageContainer div{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.newPackageContainer label{
+    font-weight: bold;
+    color: rgb(0, 106, 255);
+}
+
+.newPackageContainer input,
+.newPackageContainer select {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.newPackageContainer input:focus,
+.newPackageContainer select:focus {
+  border-color: rgb(0, 106, 255);
+}
+
+
+
+.newPackageContainer button {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgb(170, 188, 250);
+    color:  rgb(0, 106, 255);
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 2px 8px rgba(0, 8, 255, 0.363);
+}
+
+.newPackageContainer button:hover {
+    background-color: rgb(11, 89, 199);
+    color: rgb(255, 255, 255);
+}
+
+
+
+
+/* cimek*/
+.newPackageContainer h2, .utazasokH2, .listcontainer h2{
+    color: rgb(0, 106, 255);
+}
