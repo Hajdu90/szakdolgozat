@@ -55,6 +55,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
     Route::get('/users', [UserController::class, 'index']);
     Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
+
+
+    //edithez: 
+     Route::put('/utazasi_csomagoks/{id}', [UtazasiCsomagokController::class, 'update']);
 });
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
@@ -67,3 +71,5 @@ Route::middleware('auth:sanctum')->post('/foglalasok/checkout', [FoglalasokContr
 
 //UtazasaimListahoz:
 Route::middleware('auth:sanctum')->get('/utazasaim', [FoglalasokController::class, 'utazasaim']);
+
+

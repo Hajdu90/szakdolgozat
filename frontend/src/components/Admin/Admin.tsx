@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 
 import UjUtazas from "./Menupontok/UjUtazas";
-import AktivUtazasok from "./Menupontok/AktivUtazasok";
+import Felhasznalok from "./Menupontok/Felhasznalok";
 import LastMinute from "./Menupontok/LastMinute";
 import Utazasok from "./Menupontok/Utazasok";
 
+import FoglalasokAdmin from "./Menupontok/FoglalasokAdmin";
+
 
 import styles from "./Menupontok/MenuPontok.module.css"
-import { types } from "util";
+
 
 
 function Admin(){
-    // const [activeTab,setActiveTab]=useState<"utazasok" | "Létrehozás" | "aktiv" |"lastminute">("utazasok");
-    const [activeTab, setActiveTab] = useState<"utazasok" | "Létrehozás" | "aktiv" | "lastminute">(() => {
+    const [activeTab, setActiveTab] = useState<"utazasok" | "Létrehozás" | "felhasznalok" | "lastminute"  | "foglalások">(() => {
     return (localStorage.getItem("activeTab") as any) || "utazasok";
     });
     
@@ -28,15 +29,17 @@ useEffect(() => {
         <div className={styles.adminTabButt}>
             <button onClick={()=> setActiveTab("utazasok")} className={styles.aButton}>Utazasok</button>
             <button onClick={()=> setActiveTab("Létrehozás")} className={styles.aButton}>Létrehozás</button>
-            <button onClick={()=> setActiveTab("aktiv")} className={styles.aButton}>aktiv</button>
+            <button onClick={()=> setActiveTab("felhasznalok")} className={styles.aButton}>Felhasznalok</button>
             <button onClick={()=> setActiveTab("lastminute")}className={styles.aButton}>lastminute</button>
+            <button onClick={()=> setActiveTab("foglalások")}className={styles.aButton}>Foglalások</button>
         </div>
 
         <div>
             {activeTab === "utazasok" && <Utazasok/>}
             {activeTab === "Létrehozás" && <UjUtazas/>}
-            {activeTab === "aktiv" && <AktivUtazasok/>}
+            {activeTab === "felhasznalok" && <Felhasznalok/>}
             {activeTab === "lastminute" && <LastMinute/>}
+            {activeTab === "foglalások" && <FoglalasokAdmin/>}
         </div>
         </div>
     )

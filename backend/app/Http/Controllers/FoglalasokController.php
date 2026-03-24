@@ -15,7 +15,7 @@ class FoglalasokController extends Controller
 
     public function index()
     {
-        return Foglalasok::with('utazasiCsomag')->get();
+        return Foglalasok::with('user','utazasiCsomag.helyszin')->get();
     }
 
     public function store(Request $request)

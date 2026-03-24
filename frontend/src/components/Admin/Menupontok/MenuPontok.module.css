@@ -161,3 +161,11 @@
 .newPackageContainer h2, .utazasokH2, .listcontainer h2{
     color: rgb(0, 106, 255);
 }
+
+
+
+
+.szerpkorSpan{
+    color: rgb(0, 106, 255);
+    font-weight: bold;
+}
