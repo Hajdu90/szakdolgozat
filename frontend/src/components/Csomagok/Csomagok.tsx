@@ -146,11 +146,13 @@ function Csomagok() {
             className={style.passengerBtn}
             onClick={() => setUtas((prev) => Math.min(prev + 1, 10))}
           > + </button>
-        </div>
-
-        <button className={style.searchBtn} onClick={keresoFunkcio}>
+          
+          <button className={style.searchBtn} onClick={keresoFunkcio}>
           Keresés
         </button>
+        </div>
+
+        
       </header>
 
       {/* Csomagok listázása */}

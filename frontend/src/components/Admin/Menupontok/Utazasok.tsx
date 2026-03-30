@@ -25,7 +25,7 @@ function Utazasok() {
     const [utazasok, setUtazasok] = useState<Csomag[]>([]);
     const [editID, setEditID] = useState<number | null>(null);
     const [editSaveForm, setEditSaveForm] = useState<Partial<Csomag>>({});
-    const { updateCsomag } = useAuth();
+    const { updateCsomag, deleteCsomag } = useAuth();
 
 
 
@@ -90,6 +90,20 @@ function Utazasok() {
         alert("Hiba: " + err.message);
     }
 };
+
+
+    const handleDelete=async(id: number)=>{
+        const confirm=window.confirm("Biztosan törölni szeretnéd ezt az utazást?")
+        if(!confirm) return;
+
+        try{
+            await deleteCsomag(id);
+            fetchUtazasok();
+            alert("Sikeres törles");
+        }catch(err:any){
+            alert("Hiba! az utazást nem sikerült törölni" +err.message)
+        }
+    }
 
 
   
@@ -158,6 +172,7 @@ function Utazasok() {
                                         <td>{csomag.letszam}</td>
                                         <td>
                                             <button className={styles.editBtn} onClick={() => handleEdit(csomag)}>⚙️</button>
+                                            <button className={styles.deleteBtn} onClick={() => handleDelete(csomag.id)}>🗑️</button>
                                         </td>
                                     </>
                                 )}

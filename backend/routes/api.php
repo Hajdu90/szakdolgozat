@@ -59,6 +59,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     //edithez: 
      Route::put('/utazasi_csomagoks/{id}', [UtazasiCsomagokController::class, 'update']);
+
+     //Törléshez
+
+     Route::delete('/utazasi_csomagoks/{id}', [UtazasiCsomagokController::class, 'destroy']);
 });
 
 //Route::post('/login', [AuthenticatedSessionController::class, 'store'])->middleware('guest');
