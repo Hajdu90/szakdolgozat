@@ -9,6 +9,7 @@ import { useAuth } from "../Authorization/AuthContext";
 import kep1 from "../pictures/alap/1.jpg";
 import kep2 from "../pictures/alap/2.jpg";
 import kep3 from "../pictures/alap/3.jpg";
+import Bejelentkezes from "../Bejelentkezes/Bejelenkezes";
 
 const API_BASE_URL = "http://localhost:8000";
 
@@ -56,7 +57,7 @@ function CsomagReszlet() {
             });
     }, [id]);
 
-    if (!csomag) return <p>Betöltés...</p>;
+    if (!csomag) return <div style={{ minHeight: "90vh" }}>Betöltés...</div>;;
 
     return (
         <div>
@@ -114,6 +115,10 @@ function CsomagReszlet() {
                             utasokSzama: utas,
                             ar: csomag.ar,
                         })}>kosárba</button>
+                    )}
+
+                    {!isLoggedIn && !isAdmin &&(
+                        <p className={styles.pinfo}>A foglaláshoz jelentkezz be</p>
                     )}
                 </section>
             </div>

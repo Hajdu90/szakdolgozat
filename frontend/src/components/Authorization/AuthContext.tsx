@@ -6,6 +6,8 @@ interface AuthContextType {
     user: any;
     loading: boolean;
     isInitialSync: boolean;
+
+    
     
     login: (
       email: string, 
@@ -36,9 +38,13 @@ interface AuthContextType {
       id: number, 
       adatok: any
     ) => Promise<any>;
+
+
+    deleteCsomag:(id:number)=>Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
 
 //süti kiolvasásához
 const getCookie = (name: string): string => {
@@ -51,6 +57,7 @@ const getCookie = (name: string): string => {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState<any>(null);
     const [loading, setLoading] = useState(false);
+
     
     //töltés állapot a skeletonhoz- true az alkalmazas meg tolti a felh adatait a szerverről false betöltödött
     const [isInitialSync, setIsInitialSync] = useState(true);
@@ -171,6 +178,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         return await res.json();
     };
 
+    //Utazas Törléséhez
+
+
+    const deleteCsomag=async(id:number)=>{
+        await ensureCsrf();
+        const response=await fetch(`${api_url}/api/utazasi_csomagoks/${id}`, {
+            method:"DELETE",
+            credentials:"include",
+            headers:{
+                "Content-Type": "application/json",
+                Accept: "application/json",
+                "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+            },
+        });
+        if (!response.ok){
+            const errorData= await response.json();
+            throw new Error(errorData.message || "Sikertelen törlés")
+        } return await response.json();
+
+    }
+
    
     const updateCsomag = async (id: number, adatok: any) => {
        
@@ -207,7 +235,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             register,
             logout,
             createCsomag,
-            updateCsomag 
+            updateCsomag,
+            deleteCsomag,
         }}>
             {children}
         </AuthContext.Provider>

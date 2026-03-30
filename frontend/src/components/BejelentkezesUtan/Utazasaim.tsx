@@ -52,7 +52,7 @@ function Utazasaim() {
 
   return (
   <div className={styles.utazasaimContainer}>
-    <h2 className={styles.utazasaimTitle}>Fizetett Utazásaim</h2>
+    <h2 className={styles.utazasaimTitle}>Foglalt Utazásaim</h2>
     <div className={styles.utazasLista}>
         {utazasok.map((fogl) => (
             <div key={fogl.id} className={styles.utazasListaElem}>

@@ -169,3 +169,29 @@
     color: rgb(0, 106, 255);
     font-weight: bold;
 }
+
+
+
+.editBtn{
+    border-radius: 5px;
+    border: solid 1px grey;
+    cursor: pointer;
+}
+
+.editBtn:hover{
+    background-color: #004fc5;
+    border: #e0e0e0 solid 1px;
+}
+
+.deleteBtn{
+    border-radius: 5px;
+    border: solid 1px grey;
+    cursor: pointer;
+}
+
+
+.deleteBtn:hover {
+    background-color: red;
+    border: #e0e0e0 solid 1px;
+    
+}
