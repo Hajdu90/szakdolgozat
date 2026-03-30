@@ -28,21 +28,39 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $id)
+    public function show(User $user)
     {
-        return User::find($id);
+        return $user;
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, User $user)
+    public function update(Request $request, User $user)
     {
-        //
+        $data = $request->validate([
+            'name' => 'sometimes|string|max:255',
+            'email' => 'sometimes|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        if ($request->filled('password')) {
+            $data['password'] = bcrypt($request->password);
+        }
+
+        $user->update($data);
+
+        return response()->json(['message' => 'Felhasználó sikeresen frissítve!', 'user' => $user]);
     }
+
 
     public function updateRole(Request $request, User $user)
     {
+        // Annak megakadályozása, hogy az admin levegye a saját jogosultságát
+        if ($request->user()->id === $user->id && $request->input('roles') == false) {
+            return response()->json(['message' => 'Saját admin jogosultságodat nem vonhatod vissza!'], 403);
+        }
+
         $data = $request->validate([
             'roles' => ['required', 'boolean'],
         ]);
@@ -51,15 +69,24 @@ class UserController extends Controller
             'roles' => $data['roles'],
         ]);
 
-        return response()->json($user);
+        return response()->json(['message' => 'Jogosultság sikeresen módosítva!', 'user' => $user]);
     }
+
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(Request $request, User $user)
     {
-        //
+        // Annak megakadályozása, hogy az admin törölje saját magát
+        if ($request->user()->id === $user->id) {
+            return response()->json(['message' => 'Saját fiókodat nem törölheted!'], 403);
+        }
+
+        $user->delete();
+
+        return response()->json(['message' => 'Felhasználó sikeresen törölve!']);
     }
+
 }

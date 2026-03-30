@@ -55,6 +55,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/utazasi-csomagok', [UtazasiCsomagokController::class, 'store']);
     Route::get('/users', [UserController::class, 'index']);
     Route::patch('/users/{user}/role', [UserController::class, 'updateRole']);
+    Route::put('/users/{user}', [UserController::class, 'update']);
+    Route::delete('/users/{user}', [UserController::class, 'destroy']);
 
 
     //edithez: 
