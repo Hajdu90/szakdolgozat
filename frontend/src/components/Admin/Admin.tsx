@@ -25,6 +25,7 @@ useEffect(() => {
 
 
     return(
+        
         <div className={styles.adminContainer} >
         <div className={styles.adminTabButt}>
             <button onClick={()=> setActiveTab("utazasok")} className={styles.aButton}>Utazasok</button>

@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useKosar } from "../Kosar/KosarContext";
 import { useAuth } from "../Authorization/AuthContext"; 
 import styles from "./Header.module.css";
-import Fizetes from "../Fizetes/Fizetes";
+import Foglalas from "../Foglalas/Foglalas";
 
 function Header() {
   const { isLoggedIn, user, isAdmin, isInitialSync, loading, login, logout,register } = useAuth();
@@ -152,7 +152,7 @@ function Header() {
                       <span>Összesen:</span>
                       <strong>{kosar.reduce((acc, curr) => acc + curr.ar * curr.utasokSzama, 0)} Ft</strong>
                     </div>
-                    {kosar.length > 0 && <Fizetes />}
+                    {kosar.length > 0 && <Foglalas />}
                   </div>
                 </>
               )}

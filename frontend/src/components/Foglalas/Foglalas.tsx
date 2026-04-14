@@ -1,8 +1,8 @@
-import React from "react";
+
 import { useKosar } from "../Kosar/KosarContext";
 import { useNavigate } from "react-router-dom";
 
-function Fizetes() {
+function Foglalas() {
   const { kosar, clearKosar } = useKosar();
   const navigate = useNavigate();
 
@@ -67,4 +67,4 @@ function Fizetes() {
   );
 }
 
-export default Fizetes;
+export default Foglalas;

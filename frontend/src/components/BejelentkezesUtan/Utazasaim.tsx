@@ -41,7 +41,7 @@ function Utazasaim() {
         const data = await res.json();
         setUtazasok(data);
       } catch (err) {
-        console.error("Hiba a fizetett utazások lekérésekor:", err);
+        console.error("Hiba a foglalt utazások lekérésekor:", err);
       }
     };
 
@@ -67,7 +67,7 @@ function Utazasaim() {
                     </p>
 
                     <p className={styles.utazasElemMod}>Utazási mód: {fogl.utazasi_csomag.utazasi_mod.tipus}</p>
-                    <p className={styles.utazasElemAr}>Fizetett ár: {fogl.aktualis_ar} Ft </p>
+                    <p className={styles.utazasElemAr}>Ár: {fogl.aktualis_ar} Ft </p>
                     <p className={styles.utazasElemLetszam}>Fő: {fogl.letszam}</p>
                 </div>
             </div>

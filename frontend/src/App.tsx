@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import "./App.css";
+
 import Header from "./components/Header/Header";
 import Home from "./components/Home/Home";
 import Csomagok from "./components/Csomagok/Csomagok";
@@ -15,23 +15,26 @@ import { AuthProvider } from "./components/Authorization/AuthContext";
 
 function App() {
   return (
-    
     <AuthProvider>
       <KosarProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/csomagok" element={<Csomagok />} />
-          <Route path="/csomagok/:id" element={<CsomagReszlet />} />
-          <Route path="/utazasaim" element={<Utazasaim />} />
-          <Route path="/admin" element={
-            <ProtectAdminRoute>
-              <Admin />
-            </ProtectAdminRoute>
-          } />
-          <Route path="/kosar" element={<Kosar />} />
-        </Routes>
-        <Footer />
+        <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+          <Header />
+          <main style={{ flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/csomagok" element={<Csomagok />} />
+              <Route path="/csomagok/:id" element={<CsomagReszlet />} />
+              <Route path="/utazasaim" element={<Utazasaim />} />
+              <Route path="/admin" element={
+                <ProtectAdminRoute>
+                  <Admin />
+                </ProtectAdminRoute>
+              } />
+              <Route path="/kosar" element={<Kosar />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
       </KosarProvider>
     </AuthProvider>
   );

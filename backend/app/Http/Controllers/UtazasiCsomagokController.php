@@ -54,10 +54,15 @@ class UtazasiCsomagokController extends Controller
     }
 
  
-   public function destroy($id)
-    {
-        $csomag = UtazasiCsomagok::findOrFail($id);
-        $csomag->delete();
-        return response()->json(['message' => 'Sikeres törlés']);
-    }
+  public function destroy($id)
+{
+    $csomag = UtazasiCsomagok::findOrFail($id);
+    
+    // Kapcsolódó táblák törlése előbb
+    $csomag->kepek()->delete();
+    
+    $csomag->delete();
+    return response()->json(['message' => 'Sikeres törlés']);
+}
+
 }
