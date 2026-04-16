@@ -13,7 +13,7 @@ class UtazasiCsomagokController extends Controller
    
     public function index()
     {
-        return UtazasiCsomagok::with(['helyszin','utazasiMod'])->get();
+        return UtazasiCsomagok::with(['helyszin','utazasiMod', 'kepek'])->get();
     }
 
     public function store(Request $request)
@@ -43,7 +43,7 @@ class UtazasiCsomagokController extends Controller
    
     public function show($id)
 {
-    return UtazasiCsomagok::with(['helyszin','utazasiMod'])->findOrFail($id);
+    return UtazasiCsomagok::with(['helyszin','utazasiMod', 'kepek'])->findOrFail($id);
 }
 
     public function update(Request $request, $id)

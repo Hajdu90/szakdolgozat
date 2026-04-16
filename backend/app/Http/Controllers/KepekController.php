@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\kepek;
 use App\Http\Requests\StorekepekRequest;
 use App\Http\Requests\UpdatekepekRequest;
+use App\Models\UtazasiCsomagok;
+use Illuminate\Http\Request;
 
 class KepekController extends Controller
 {
@@ -47,4 +49,22 @@ class KepekController extends Controller
     {
         //
     }
+
+
+    public function kepFeltoltes(Request $request, $id)
+{
+    $request->validate([
+        'kep' => 'required|image|max:2048'
+    ]);
+
+    $csomag = UtazasiCsomagok::findOrFail($id);
+    $path = $request->file('kep')->store('kepek', 'public');
+
+    $kep = $csomag->kepek()->create(['kep_eleresi_ut' => $path]);
+
+    return response()->json($kep);
+}
+
+
+
 }

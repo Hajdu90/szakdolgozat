@@ -9,7 +9,7 @@ import { useAuth } from "../Authorization/AuthContext";
 import kep1 from "../pictures/alap/1.jpg";
 import kep2 from "../pictures/alap/2.jpg";
 import kep3 from "../pictures/alap/3.jpg";
-import Bejelentkezes from "../Bejelentkezes/Bejelenkezes";
+
 
 const API_BASE_URL = "http://localhost:8000";
 
@@ -28,6 +28,12 @@ interface Csomag {
     utazasi_mod: {
         tipus: string;
     };
+
+    kepek?:{
+        id:number;
+        kep_eleresi_ut:string
+    }[];
+
 }
 
 
@@ -38,7 +44,7 @@ function CsomagReszlet() {
     const { id } = useParams();
     const [csomag, setCsomag] = useState<Csomag | null>(null);
     const navigate = useNavigate();
-    const [currentImg, setCurrentImg] = useState(kep1);
+    const [currentImg, setCurrentImg] = useState<string>(kep1);
     const [utas, setUtas] = useState(1);
     const { kosarHozzaAd } = useKosar();
 
@@ -47,13 +53,17 @@ function CsomagReszlet() {
             .then(res => {
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 return res.json();
-            })
+         })
             .then(data => {
-                setCsomag(data);
-            })
+             setCsomag(data);
+            // ← ez az új sor
+             if (data.kepek && data.kepek.length > 0) {
+                   setCurrentImg(data.kepek[0].kep_eleresi_ut);
+             }
+         })
             .catch((err) => {
-                console.log("Hiba a CsomagReszlet fetch-nél:", err);
-                setCsomag(null);
+             console.log("Hiba a CsomagReszlet fetch-nél:", err);
+             setCsomag(null);
             });
     }, [id]);
 
@@ -65,13 +75,35 @@ function CsomagReszlet() {
 
             <div className={styles.sectionContainer}>
                 <div className={styles.kepekBaloldal}>
+
+
                     <div className={styles.nagyKep}>
-                        <img src={currentImg} alt="" /> 
+                       <img src={
+
+                             csomag.kepek && csomag.kepek.length > 0
+                            ? currentImg
+                            : kep1
+                            } alt="" />
+
+                        
                     </div>
-                    <div className={styles.kisKepekContainer}>
-                        <img src={kep1} onClick={() => setCurrentImg(kep1)} alt="" />
-                        <img src={kep2} onClick={() => setCurrentImg(kep2)} alt="" />
-                        <img src={kep3} onClick={() => setCurrentImg(kep3)} alt="" />
+
+                   <div className={styles.kisKepekContainer}>
+                        {csomag.kepek && csomag.kepek.length > 0
+                            ? csomag.kepek.map((k) => (
+                                <img
+                                    key={k.id}
+                                    src={`${k.kep_eleresi_ut}`}
+                                    onClick={() => setCurrentImg(k.kep_eleresi_ut)}
+                                    alt=""
+                                />
+                            ))
+                            : <>
+                                <img src={kep1} onClick={() => setCurrentImg(kep1)} alt="" />
+                                <img src={kep2} onClick={() => setCurrentImg(kep2)} alt="" />
+                                <img src={kep3} onClick={() => setCurrentImg(kep3)} alt="" />
+                            </>
+    }                   
                     </div>
                 </div>
 

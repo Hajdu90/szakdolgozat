@@ -147,6 +147,7 @@
     width: 300px;
     /* height: auto; */
     height: 350px;
+    object-fit: cover;
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     border-radius: 5%;
     
@@ -163,6 +164,7 @@
 .kisKepekContainer img{
     width: 100px;
     /* height: auto; */
+    object-fit: cover;
     height: 100px;
     cursor: pointer;
     border: 2px solid transparent;

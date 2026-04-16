@@ -61,7 +61,11 @@ function Home() {
         >
             <div className={styles.lastMinuteCard}>
           
-          <img src={alapPic} alt="" />
+          <img src={csomag.kepek && csomag.kepek.length > 0
+           ? csomag.kepek[0].kep_eleresi_ut
+           : alapPic}
+           alt=""   
+           />
 
           <div>
             <p>{csomag.helyszin.orszag}</p>

@@ -18,6 +18,10 @@ interface Csomag {
     varos: string;
     leiras?: string | null;
   };
+  kepek?:{
+    id:number;
+    kep_eleresi_ut:string
+  }[];
 }
 
 function Csomagok() {
@@ -165,8 +169,14 @@ function Csomagok() {
               to={`/csomagok/${csomag.id}`}
             >
               <div className={style.divContainer}>
+
                 <div className={style.firstpicture}>
-                  <img src={alapKep} alt={csomag.helyszin.orszag} />
+                  <img src={csomag.kepek && csomag.kepek.length > 0
+                  ? csomag.kepek[0].kep_eleresi_ut
+                  : alapKep} 
+                  alt={csomag.helyszin.orszag} 
+                  
+                  />
                 </div>
 
                 <div className={style.szovegContainer}>
