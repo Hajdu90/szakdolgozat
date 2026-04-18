@@ -79,3 +79,6 @@ Route::middleware('auth:sanctum')->post('/foglalasok/checkout', [FoglalasokContr
 Route::middleware('auth:sanctum')->get('/utazasaim', [FoglalasokController::class, 'utazasaim']);
 
 
+//Foglalás lemondása
+
+Route::middleware('auth:sanctum')->delete('/utazasaim/{id}', [FoglalasokController::class, 'destroy']);

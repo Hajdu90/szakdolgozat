@@ -6,6 +6,7 @@ import Csomagok from "./components/Csomagok/Csomagok";
 import CsomagReszlet from "./components/Csomagok/CsomagReszlet";
 import Footer from "./components/Footer/Footer";
 import Utazasaim from "./components/BejelentkezesUtan/Utazasaim";
+import LastMinuteCsomagok from "./components/Csomagok/LastMinuteCsomagok";
 import Admin from "./components/Admin/Admin";
 import ProtectAdminRoute from "./components/Admin/ProtectAdminRoute";
 import { KosarProvider } from "./components/Kosar/KosarContext";
@@ -25,6 +26,7 @@ function App() {
               <Route path="/csomagok" element={<Csomagok />} />
               <Route path="/csomagok/:id" element={<CsomagReszlet />} />
               <Route path="/utazasaim" element={<Utazasaim />} />
+              <Route path="/lastMinuteCsomagok" element={<LastMinuteCsomagok/>}/>
               <Route path="/admin" element={
                 <ProtectAdminRoute>
                   <Admin />

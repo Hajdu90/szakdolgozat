@@ -37,6 +37,8 @@ class UtazasiCsomagokController extends Controller
             'utazasi_mod_id' => $request->utazasi_mod_id,
         ]);
 
+        
+
         return response()->json($csomag);
     }
 

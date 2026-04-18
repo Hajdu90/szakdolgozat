@@ -20,6 +20,8 @@ interface Csomag {
     visszaut_datum: string;
     szabad_helyek: number;
     ar: number;
+    akcios_ar:number;
+    is_lastminute:boolean;
     helyszin: {
         orszag: string;
         varos: string;
@@ -127,7 +129,15 @@ function CsomagReszlet() {
                     </div>
 
                     <div className={styles.sectionThreeContainer}>
-                        <p className={styles.csAr}>Ár: {csomag.ar} Ft</p>
+                        {csomag.is_lastminute ? (
+                              <div>
+                                <p className={styles.lmArRegi}> {csomag.ar} Ft   </p>
+                                 <p className={styles.lmar} > Akciós ár: {csomag.akcios_ar} Ft  </p>
+                             </div>
+                              ) : (
+                                <p className={styles.csAr}>Ár: {csomag.ar} Ft</p>
+                        )}
+                        
 
                         
                         {isLoggedIn && !isAdmin && (
@@ -145,7 +155,7 @@ function CsomagReszlet() {
                             csomagId: csomag.id,
                             nev: `${csomag.helyszin.orszag}, ${csomag.helyszin.varos}`,
                             utasokSzama: utas,
-                            ar: csomag.ar,
+                            ar: csomag.is_lastminute ? csomag.akcios_ar:csomag.ar,
                         })}>kosárba</button>
                     )}
 
@@ -159,10 +169,5 @@ function CsomagReszlet() {
 }
 
 export default CsomagReszlet;
-/*
-kepek
-utazasi mod- id: utazasi_csomagoks->utazasi_mod_d
-helyszin: utazasi_csomagoks -> helyszin_id->helyszins.id
 
- */
 

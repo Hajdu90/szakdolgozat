@@ -6,6 +6,7 @@ interface AuthContextType {
     user: any;
     loading: boolean;
     isInitialSync: boolean;
+    
 
     
     
@@ -41,6 +42,8 @@ interface AuthContextType {
 
 
     deleteCsomag:(id:number)=>Promise<void>;
+
+    lemondFoglalas: (id: number) => Promise<any>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -224,6 +227,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         syncUser();
     }, []);
 
+
+
+
+
+    //foglalas törlesehez:
+
+    const lemondFoglalas = async (id: number) => {
+    await ensureCsrf();
+    const res = await fetch(`${api_url}/api/utazasaim/${id}`, {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "X-XSRF-TOKEN": getCookie("XSRF-TOKEN"),
+        },
+    });
+    if (!res.ok) throw new Error("Sikertelen lemondás");
+    return await res.json();
+};
+
     return (
         <AuthContext.Provider value={{
             isLoggedIn: !!user, //true ha van felhasznalo
@@ -237,6 +261,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             createCsomag,
             updateCsomag,
             deleteCsomag,
+            lemondFoglalas,
         }}>
             {children}
         </AuthContext.Provider>

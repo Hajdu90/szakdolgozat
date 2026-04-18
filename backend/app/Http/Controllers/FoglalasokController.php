@@ -41,7 +41,7 @@ class FoglalasokController extends Controller
             'utazasi_csomagok_id' => $csomag->id,
             'user_id' => Auth::id() ?? 1, // Ha nincs login, alapértelmezett 1-es ID
             'letszam' => $request->letszam,
-            'aktualis_ar' => $csomag->ar * $request->letszam
+            'aktualis_ar' => $csomag->akcios_ar * $request->letszam
         ]);
 
         return response()->json([
@@ -67,12 +67,15 @@ class FoglalasokController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Foglalasok $foglalasok)
+    public function destroy($id)
     {
-        //
+    $foglalas = Foglalasok::where('id', $id)
+        ->where('user_id', Auth::id())
+        ->firstOrFail();
+    
+    $foglalas->delete();
+    
+    return response()->json(['message' => 'Foglalás sikeresen lemondva!']);
     }
 
     //Lekérdezés

@@ -23,7 +23,7 @@
     box-shadow: 0 5px 4px rgba(1, 115, 255, 0.474);
     border-radius: 20px;
     padding: 10px;
-    height: 450px;
+    min-height: 450px;
     overflow: hidden;
 
     cursor: pointer;
@@ -100,13 +100,33 @@
     overflow: hidden;
 }
     
+.lmArRegi{
+    text-decoration:line-through;
+    color: #535353;
+    font-weight:bold;
+    margin-top:0px;
+    
+
+
+}
+
+.lmar{
+    font-weight: bolder;
+    color: rgb(255, 255, 255);
+    border-radius: 20px;
+    background-color: #de540a;
+    min-width: 150px;
+    padding: 10px;
+    margin: auto auto 0;
+
+}
 
 .arText{
     font-weight: bolder;
     color: rgb(0, 159, 239);
     border-radius: 20px;
     background-color: #8dc6ff;
-    width: 150px;
+    min-width: 150px;
     padding: 10px;
     margin: auto auto 0;
   
@@ -486,3 +506,6 @@
    
 
 }
+
+
+

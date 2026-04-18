@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import styles from "./Utazasaim.module.css";
+import { useAuth } from "../Authorization/AuthContext";
 
 
 
@@ -29,6 +30,7 @@ interface Utazas {
 
 function Utazasaim() {
   const [utazasok, setUtazasok] = useState<Utazas[]>([]);
+  const { lemondFoglalas } = useAuth();
  
 
   useEffect(() => {
@@ -48,7 +50,23 @@ function Utazasaim() {
     fetchUtazasok();
   }, []);
 
-  if (utazasok.length === 0) return <p>Még nincs kifizetett utazásod.</p>;
+  if (utazasok.length === 0) return <p>Még nincs foglalt utazásod.</p>;
+
+
+
+//fogalás lemondasa
+
+const lemondas = async (id: number) => {
+    try {
+        await lemondFoglalas(id);
+        setUtazasok(prev => prev.filter(u => u.id !== id));
+    } catch (err) {
+        console.error("Hiba a lemondásnál:", err);
+    }
+};
+
+
+
 
   return (
   <div className={styles.utazasaimContainer}>
@@ -69,6 +87,7 @@ function Utazasaim() {
                     <p className={styles.utazasElemMod}>Utazási mód: {fogl.utazasi_csomag.utazasi_mod.tipus}</p>
                     <p className={styles.utazasElemAr}>Ár: {fogl.aktualis_ar} Ft </p>
                     <p className={styles.utazasElemLetszam}>Fő: {fogl.letszam}</p>
+                    <button onClick={() => lemondas(fogl.id)}>Lemondás</button>
                 </div>
             </div>
         ))}

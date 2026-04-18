@@ -186,7 +186,7 @@ function Header() {
           <>
             <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Főoldal</Link></li>
             <li><Link to="/csomagok" onClick={() => setIsMenuOpen(false)}>Csomagok</Link></li>
-            <li><Link to="/rolunk" onClick={() => setIsMenuOpen(false)}>Rólunk</Link></li>
+            <li><Link to="/lastMinuteCsomagok" onClick={() => setIsMenuOpen(false)}>LastMinute</Link></li>
             {isLoggedIn && !isAdmin && <li><Link to="/utazasaim" onClick={() => setIsMenuOpen(false)}>Utazásaim</Link></li>}
           </>
         )}
