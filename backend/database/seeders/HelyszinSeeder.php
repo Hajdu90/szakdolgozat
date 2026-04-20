@@ -95,7 +95,6 @@ class HelyszinSeeder extends Seeder
                 'ferohely' => 57,
             ],
 
-
         ];
 
         foreach ($helyszinek as $helyszin) {
