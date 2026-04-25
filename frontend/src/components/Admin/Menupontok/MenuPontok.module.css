@@ -251,3 +251,38 @@
     padding: 15px;
   }
 }
+
+
+
+
+.toggleWrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.toggleTrack {
+    width: 46px;
+    height: 24px;
+    border-radius: 12px;
+    position: relative;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.toggleThumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: white;
+    position: absolute;
+    top: 2px;
+    transition: left 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+.toggleLabel {
+    font-size: 12px;
+    font-weight: bold;
+}

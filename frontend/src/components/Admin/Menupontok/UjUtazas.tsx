@@ -108,14 +108,6 @@ function UjUtazas(){
                         onChange={e => setBackDate(e.target.value)} />
                 </div>
 
-                <div>
-                    <label>Létszám</label>
-                    <input 
-                        type="number"
-                        onChange={e => setLetszam(Number(e.target.value))}
-                        min={1}/>
-                </div>
-
                 <button type="submit">Létrehozás</button>
 
 

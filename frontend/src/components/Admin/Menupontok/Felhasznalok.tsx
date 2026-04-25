@@ -10,10 +10,13 @@ interface User {
     created_at: string;
 }
 
+
+
 function Felhasznalok() {
     const [users, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState(true);
     const api_base_url = "http://localhost:8000";
+    const { user: adminUser } = useAuth();
 
     const fetchUsers = async () => {
         try {
@@ -44,6 +47,39 @@ function Felhasznalok() {
 
     if (loading) return <div>Betöltés...</div>;
 
+
+
+    const roleValtas = async (userId: number, jelenlegiRole: boolean) => {
+        try {
+             await fetch("http://localhost:8000/sanctum/csrf-cookie", { credentials: "include" });
+              const xsrfToken = decodeURIComponent(
+                 document.cookie.split("; ").find(row => row.startsWith("XSRF-TOKEN="))?.split("=")[1] || ""
+                  );
+
+            
+        const res = await fetch(`http://localhost:8000/api/users/${userId}/role`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "X-XSRF-TOKEN": xsrfToken,
+                 },
+                 body: JSON.stringify({ roles: !jelenlegiRole }),
+                  });
+
+             if (res.ok) {
+                 setUsers(prev => prev.map(u => 
+                     u.id === userId ? { ...u, roles: !jelenlegiRole } : u
+                   ));
+                }
+             } catch (err) {
+                console.error("Hiba a szerepkör váltásnál:", err);
+                 }
+                };
+
+
+
     return (
         <div className={styles.listcontainer}>
             <h2 className={styles.utazasokH2}>Regisztrált Felhasználók</h2>
@@ -56,6 +92,7 @@ function Felhasznalok() {
                             <th>Email</th>
                             <th>Szerepkör</th>
                             <th>Regisztráció dátuma</th>
+                            <th>Settings</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,11 +103,31 @@ function Felhasznalok() {
                                 <td>{u.email}</td>
                                 <td>
                                     {u.roles ? 
-                                        <span className={styles.szerpkorSpan}>Admin</span> : 
-                                        "Felhasználó"
-                                    }
+                                    <span className={styles.szerpkorSpan}>Admin</span> : 
+                                      "Felhasználó"
+        }
+
                                 </td>
-                                <td>{new Date(u.created_at).toLocaleDateString('hu-HU')}</td>
+
+                                 <td>{new Date(u.created_at).toLocaleDateString('hu-HU')}</td>
+
+                                <td>
+                                    <label className={styles.toggleWrapper}>
+                                        <div
+                                         onClick={() => roleValtas(u.id, u.roles)}
+                                         className={styles.toggleTrack}
+                                         style={{ backgroundColor: u.roles ? "#4CAF50" : "#ccc" }}
+                                         >
+                                            <div className={styles.toggleThumb}
+                                            style={{ left: u.roles ? "24px" : "2px" }}
+                                            />
+                                            </div>
+                                            <span className={styles.toggleLabel}
+                                             style={{ color: u.roles ? "#4CAF50" : "#999" }}>
+                                                {u.roles ? "Admin" : "Tag"}
+                                                  </span>
+                                            </label>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
