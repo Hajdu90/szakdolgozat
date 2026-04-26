@@ -87,7 +87,7 @@ const lemondas = async (id: number) => {
                     <p className={styles.utazasElemMod}>Utazási mód: {fogl.utazasi_csomag.utazasi_mod.tipus}</p>
                     <p className={styles.utazasElemAr}>Ár: {fogl.aktualis_ar} Ft </p>
                     <p className={styles.utazasElemLetszam}>Fő: {fogl.letszam}</p>
-                    <button onClick={() => lemondas(fogl.id)}>Lemondás</button>
+                    <button className={styles.lemondBtn} onClick={() => lemondas(fogl.id)}>Lemondás</button>
                 </div>
             </div>
         ))}

@@ -2,7 +2,7 @@
 
 .utazasaimContainer {
   padding: 20px;
-  max-width: 900px;
+  max-width: 700px;
   margin: 0 auto;
   font-family: 'Inter', sans-serif;
 }
@@ -27,7 +27,7 @@
   flex-direction: column;
   background: linear-gradient(135deg, #e3f2fd, #bbdefb);
   border-left: 5px solid #1976d2;
-  padding: 5px 20px;
+  padding: 5px 15px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
   transition: transform 0.2s, box-shadow 0.2s;
@@ -48,6 +48,7 @@
 
 .utazasElemReszletek {
   display: flex;
+  align-items: center;
   gap: 30px;
   flex-wrap: wrap; 
 }
@@ -61,4 +62,22 @@
   margin: 0;
   font-weight: 500;
   white-space: nowrap;
+}
+
+.lemondBtn{
+  margin-left: auto;
+  border-radius: 5px;
+  background-color: #1976d277;
+  border: none;
+  color: #bfe0fb;
+  font-weight: bolder;
+  padding: 8px;
+  cursor: pointer;
+  transition: transform 0.2s;
+  
+}
+.lemondBtn:hover{
+  transform: scale(1.05);
+  background-color: #0d47a1;
+  color: #bbdefb;
 }
