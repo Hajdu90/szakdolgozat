@@ -8,22 +8,22 @@ function Foglalas() {
 
   const handleCheckout = async () => {
     try {
-      //pecsét -biztonságos adatmodositáshoz
+      
       await fetch("http://localhost:8000/sanctum/csrf-cookie", { 
         credentials: "include" 
       });
 
-     //lekéri az összes sütit, amit a weboldal tárol
+     
       const xsrfToken = document.cookie
-      //megkeressük benne azt a részt, ami az XSRF-TOKEN=-nel kezdődik, azt levagjuk mert cska a szöveg masodik resze kell
+      
         .split("; ")
         .find(row => row.startsWith("XSRF-TOKEN="))
 
         ?.split("=")[1];
-      //pedig "lefordítja" a szöveget (Sutik neha fura karakTerekbol allnak)
+      
       const tokenToSend = xsrfToken ? decodeURIComponent(xsrfToken) : "";
 
-      // tényleges fizetési kérés a backendnek
+      
       const valasz = await fetch("http://localhost:8000/api/foglalasok/checkout", {
         method: "POST",
         credentials: "include", 

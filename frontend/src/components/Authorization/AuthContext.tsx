@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(false);
 
     
-    //töltés állapot a skeletonhoz- true az alkalmazas meg tolti a felh adatait a szerverről false betöltödött
+    //töltés állapot a skeletonhoz
     const [isInitialSync, setIsInitialSync] = useState(true);
 
     const api_url = "http://localhost:8000";

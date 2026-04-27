@@ -32,7 +32,7 @@ function UjUtazas(){
           .then(data => setUmodok(data));
       }, []);
 
-      //h ne töltödjön ujra az oldal ha elküldjük az urlapot
+      
 
       const handleSubmit=async(e: React.FormEvent)=>{ //aszinron függvény(várni tud műveletekre, pl adatküldésre a szervernek, anélkül hogy lefagyna az oldal)
         e.preventDefault(); //az oldal nem tölt újra,ha rákattint a küldés gombra

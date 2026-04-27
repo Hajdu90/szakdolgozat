@@ -13,7 +13,7 @@ function Home() {
  
   const navigate=useNavigate();
 
-  //lasMin
+  
   const [lastMin,setLastMinute]=useState<any []>([]);
 
   useEffect(()=>{
@@ -44,7 +44,7 @@ function Home() {
 
 
      {/* Last Minute szekció */}
-     {/* Last Minute szekció */}
+     
 <section className={styles.lastMinuteSection}>
   <h2 className={styles.lastMinuteTitle}>Last Minute</h2>
 
